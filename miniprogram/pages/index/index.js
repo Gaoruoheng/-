@@ -13,6 +13,7 @@ const {
   decorateItemStatus
 } = require("../../utils/itemStatus.js");
 const { getCache, setCache, removeCache } = require("../../utils/pageCache.js");
+const { backHome } = require("../../utils/navigation.js");
 const {
   removeItem,
   upsertItem
@@ -1214,7 +1215,9 @@ Page({
     this.setData({ showItemPanel: false });
     this.cacheItemDetail(item);
     wx.navigateTo({
-      url: "/pages/item-detail/item-detail?itemId=" + item._id + "&wardrobeId=" + this.data.wardrobeId
+      url: "/pages/item-detail/item-detail?itemId=" + item._id +
+        "&wardrobeId=" + this.data.wardrobeId +
+        "&from=index"
     });
   },
 
@@ -1622,17 +1625,7 @@ Page({
   },
 
   goBack() {
-    wx.navigateBack({
-      fail() {
-        wx.reLaunch({
-          url: "/pages/home/home",
-          fail(err) {
-            console.error("back home failed", err);
-            wx.showToast({ title: "返回失败，请重新编译", icon: "none" });
-          }
-        });
-      }
-    });
+    backHome();
   },
 
   ensureWardrobeForAction() {

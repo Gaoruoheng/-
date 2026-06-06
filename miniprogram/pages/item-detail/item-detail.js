@@ -7,6 +7,7 @@ const {
   requireVerifiedPage
 } = require("../../utils/auth.js");
 const { getCache, setCache, removeCache } = require("../../utils/pageCache.js");
+const { backFromItemDetail } = require("../../utils/navigation.js");
 const {
   patchAfterItemDelete,
   patchAfterItemUpdate
@@ -28,13 +29,20 @@ Page({
     originalUrl: "",
     originalThumbUrl: "",
     originalCategory: "",
+    backSource: "",
+    backCategory: "",
     categories: [],
     catIndex: 0
   },
 
   async onLoad(options) {
     if (!requireVerifiedPage()) return;
-    this.setData({ itemId: options.itemId || "", wardrobeId: options.wardrobeId || "" });
+    this.setData({
+      itemId: options.itemId || "",
+      wardrobeId: options.wardrobeId || "",
+      backSource: options.from || "",
+      backCategory: decodeURIComponent(options.category || "")
+    });
     const hasCache = this.hydrateItemCache();
     this.hydrateCategoriesCache();
     const ok = await this.verifyWardrobeAccess(options.wardrobeId);
@@ -304,7 +312,7 @@ Page({
       }
       wx.hideLoading();
       wx.showToast({ title: "已保存", icon: "success" });
-      wx.navigateBack();
+      this.goBack();
     } catch (e) {
       console.error(e);
       wx.hideLoading();
@@ -360,7 +368,7 @@ Page({
           });
           wx.hideLoading();
           wx.showToast({ title: "已删除", icon: "success" });
-          wx.navigateBack();
+          this.goBack();
         } catch (e) {
           console.error(e);
           wx.hideLoading();
@@ -371,6 +379,10 @@ Page({
   },
 
   goBack() {
-    wx.navigateBack({ fail() { wx.reLaunch({ url: "/pages/home/home" }); } });
+    backFromItemDetail({
+      wardrobeId: this.data.wardrobeId,
+      source: this.data.backSource,
+      categoryName: this.data.backCategory || this.data.originalCategory || this.data.item.category
+    });
   }
 });

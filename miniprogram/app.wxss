@@ -16,6 +16,52 @@ view, text, scroll-view, image {
   box-sizing: border-box;
 }
 
+.kawaii-back {
+  width: 82rpx;
+  height: 76rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 6rpx;
+  margin-right: 18rpx;
+  border-radius: 999rpx;
+  box-sizing: border-box;
+}
+
+.kawaii-back-icon {
+  width: 64rpx;
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FFFDF9;
+  border: 4rpx solid #5C4B51;
+  border-radius: 50%;
+  box-shadow: 4rpx 4rpx 0 #FFB7C5;
+  box-sizing: border-box;
+}
+
+.kawaii-back-stroke {
+  width: 20rpx;
+  height: 20rpx;
+  margin-left: 8rpx;
+  border-left: 6rpx solid #5C4B51;
+  border-bottom: 6rpx solid #5C4B51;
+  border-radius: 2rpx;
+  transform: rotate(45deg);
+  box-sizing: border-box;
+}
+
+.kawaii-back-label {
+  display: none;
+}
+
+.kawaii-back:active .kawaii-back-icon {
+  transform: translate(2rpx, 2rpx);
+  box-shadow: 2rpx 2rpx 0 #FFB7C5;
+}
+
 .container {
   display: flex;
   flex-direction: column;

@@ -7,6 +7,7 @@ const {
   requireVerifiedPage
 } = require("../../utils/auth.js");
 const { getCache, setCache, removeCache } = require("../../utils/pageCache.js");
+const { backToWardrobe } = require("../../utils/navigation.js");
 
 const DEFAULT_CATEGORIES = ["上衣", "下装", "连衣裙", "鞋子", "配饰"];
 const MANAGE_CACHE_MAX_AGE = 1000 * 60 * 30;
@@ -726,7 +727,7 @@ Page({
       this.cacheCurrentManageState({ name: wardrobeName, desc: wardrobeDesc });
       wx.hideLoading();
       wx.showToast({ title: "已保存", icon: "success" });
-      wx.navigateBack();
+      backToWardrobe(this.data.wardrobeId);
     } catch (err) {
       console.error(err);
       wx.hideLoading();
@@ -735,10 +736,6 @@ Page({
   },
 
   goBack() {
-    wx.navigateBack({
-      fail() {
-        wx.reLaunch({ url: "/pages/home/home" });
-      }
-    });
+    backToWardrobe(this.data.wardrobeId);
   }
 });

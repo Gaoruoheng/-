@@ -13,6 +13,7 @@ const {
   decorateItemStatus
 } = require("../../utils/itemStatus.js");
 const { getCache, setCache, removeCache } = require("../../utils/pageCache.js");
+const { backToWardrobe } = require("../../utils/navigation.js");
 const {
   patchAfterItemUpdate,
   removeItem,
@@ -457,7 +458,9 @@ Page({
     this.setData({ showItemPanel: false });
     this.cacheItemDetail(item);
     wx.navigateTo({
-      url: "/pages/item-detail/item-detail?itemId=" + item._id + "&wardrobeId=" + this.data.wardrobeId
+      url: "/pages/item-detail/item-detail?itemId=" + item._id +
+        "&wardrobeId=" + this.data.wardrobeId +
+        "&from=category&category=" + encodeURIComponent(this.data.categoryName)
     });
   },
 
@@ -597,10 +600,6 @@ Page({
   },
 
   goBack() {
-    wx.navigateBack({
-      fail() {
-        wx.reLaunch({ url: "/pages/home/home" });
-      }
-    });
+    backToWardrobe(this.data.wardrobeId);
   }
 });

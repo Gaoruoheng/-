@@ -7,6 +7,7 @@ const {
   requireVerifiedPage
 } = require("../../utils/auth.js");
 const { getCache, setCache, removeCache } = require("../../utils/pageCache.js");
+const { backToCategoryOrWardrobe } = require("../../utils/navigation.js");
 const {
   patchAfterItemCreate,
   patchCategoryNamesCache
@@ -311,7 +312,7 @@ Page({
       }
       wx.hideLoading();
       wx.showToast({ title: "已保存", icon: "success" });
-      wx.navigateBack();
+      backToCategoryOrWardrobe(wardrobeId, this.data.defaultCategory);
     } catch (err) {
       console.error(err);
       wx.hideLoading();
@@ -326,10 +327,6 @@ Page({
   },
 
   goBack() {
-    wx.navigateBack({
-      fail() {
-        wx.reLaunch({ url: "/pages/home/home" });
-      }
-    });
+    backToCategoryOrWardrobe(this.data.wardrobeId, this.data.defaultCategory);
   }
 });
