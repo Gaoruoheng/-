@@ -202,7 +202,7 @@ $form.Controls.Add($logBox)
 $uploadButton.Add_Click({ Upload-Backup })
 $downloadButton.Add_Click({ Download-Latest })
 $statusButton.Add_Click({ Check-Status })
-$openGitHubButton.Add_Click({ Start-Process "https://github.com/Gaoruoheng/-" })
+$openGitHubButton.Add_Click({ Start-Process "https://github.com/Gaoruoheng/wardrobe-miniprogram" })
 $openFolderButton.Add_Click({ Start-Process $ProjectRoot })
 
 $form.Add_Shown({
