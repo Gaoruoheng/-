@@ -1,0 +1,28 @@
+<view class="item-panel-mask" wx:if="{{show}}" bindtap="closePanel"></view>
+<view class="item-panel" wx:if="{{show}}" catchtap="noop">
+  <view class="item-panel-header">
+    <image class="item-panel-img" src="{{item.url}}" mode="aspectFill"></image>
+    <view class="item-panel-main">
+      <text class="item-panel-title">{{item.name}}</text>
+      <text class="item-panel-sub">{{item.category}}</text>
+      <text class="item-panel-status {{item.statusClass}}">{{item.wearStatusText}}</text>
+    </view>
+    <view class="item-panel-close" bindtap="closePanel">×</view>
+  </view>
+
+  <view class="item-panel-action edit" bindtap="editItem">
+    <text>修改衣服</text>
+  </view>
+
+  <view class="status-actions">
+    <view class="status-action {{item.isAvailable?'active':''}}" bindtap="markStatus" data-status="available">
+      <text>在库</text>
+    </view>
+    <view class="status-action in-use {{item.isInUse?'active':''}}" bindtap="markStatus" data-status="in_use">
+      <text>使用中</text>
+    </view>
+    <view class="status-action stored {{item.isStored?'active':''}}" bindtap="markStatus" data-status="stored">
+      <text>已收纳</text>
+    </view>
+  </view>
+</view>

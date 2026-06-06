@@ -1,6 +1,7 @@
 {
-  "navigationBarTitleText": "基础能力",
+  "navigationStyle": "custom",
   "usingComponents": {
-    "cloud-tip-modal": "/components/cloudTipModal/index"
+    "cloud-tip-modal": "/components/cloudTipModal/index",
+    "item-action-panel": "/components/itemActionPanel/index"
   }
 }

@@ -1,0 +1,91 @@
+<view class="container">
+  <view class="top-nav">
+    <view class="kawaii-back" bindtap="goBack"><view class="kawaii-back-icon"><view class="kawaii-back-stroke"></view></view><text class="kawaii-back-label">返回</text></view>
+    <text class="nav-title">{{categoryName}}</text>
+    <text class="nav-count">{{items.length}} 件</text>
+  </view>
+
+  <view class="sort-tip">
+    <text>长按衣服后上下拖动排序，顺序会同步到首页菜单</text>
+  </view>
+
+  <scroll-view class="item-list" scroll-y="{{!isDragging}}" show-scrollbar="{{false}}">
+    <view class="drag-list" id="item-drag-list">
+      <view
+        class="{{item.cls}}"
+        wx:for="{{items}}"
+        wx:key="_id"
+        id="cloth-{{index}}"
+        bindtap="enterItem"
+        bindtouchstart="onDragTouchStart"
+        bindlongpress="onDragStart"
+        bindtouchmove="onDragMove"
+        bindtouchend="onDragEnd"
+        bindtouchcancel="onDragEnd"
+        data-index="{{index}}"
+        data-id="{{item._id}}"
+      >
+        <view class="rank-badge">
+          <text>{{index + 1}}</text>
+        </view>
+
+        <view class="cloth-img-box">
+          <image src="{{item.displayUrl || item.url}}" mode="aspectFill"></image>
+        </view>
+
+        <view class="cloth-info">
+          <text class="cloth-name">{{item.name}}</text>
+          <text class="cloth-color" wx:if="{{item.color}}">颜色：{{item.color}}</text>
+          <text class="cloth-cat">{{item.category}}</text>
+          <text class="cloth-status {{item.statusClass}}" wx:if="{{item.isInUse || item.isStored}}">{{item.wearStatusText}}</text>
+        </view>
+
+        <view class="drag-handle">
+          <text>=</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="empty-state" wx:if="{{items.length === 0 && !loadingMoreItems}}">
+      <text class="empty-text">这个分类还没有衣服 </text>
+    </view>
+
+    <view class="loading-more" wx:if="{{loadingMoreItems && items.length > 0}}">
+      <text>正在同步更多衣服...</text>
+    </view>
+
+    <view style="height: 100rpx;"></view>
+  </scroll-view>
+
+  <view class="drag-floating" wx:if="{{isDragging}}" style="top:{{floatY}}px;">
+    <view class="cloth-row cloth-floating">
+      <view class="rank-badge">
+        <text>{{floatRank}}</text>
+      </view>
+      <view class="cloth-img-box">
+        <image src="{{floatItem.displayUrl || floatItem.url}}" mode="aspectFill"></image>
+      </view>
+      <view class="cloth-info">
+        <text class="cloth-name">{{floatItem.name}}</text>
+        <text class="cloth-color" wx:if="{{floatItem.color}}">颜色：{{floatItem.color}}</text>
+        <text class="cloth-status {{floatItem.statusClass}}" wx:if="{{floatItem.isInUse || floatItem.isStored}}">{{floatItem.wearStatusText}}</text>
+      </view>
+      <view class="drag-handle">
+        <text>=</text>
+      </view>
+    </view>
+  </view>
+
+  <item-action-panel
+    show="{{showItemPanel}}"
+    item="{{panelItem}}"
+    bind:close="closeItemPanel"
+    bind:edit="editPanelItem"
+    bind:statuschange="markPanelItemStatus"
+  />
+
+  <view class="fab-add" wx:if="{{!isDragging}}" bindtap="goAddItem">
+    <text>+</text>
+  </view>
+</view>
+

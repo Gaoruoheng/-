@@ -1,0 +1,6 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "item-action-panel": "/components/itemActionPanel/index"
+  }
+}

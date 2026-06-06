@@ -1,29 +1,267 @@
-<!--index.wxml-->
-<view class="container">
-  <view class="title">快速了解云开发</view>
-  <view class="top_tip">免鉴权接口调用 免部署后台 高并发</view>
-  <view class="power" wx:key="title" wx:for="{{powerList}}" wx:for-item="power">
-    <view class="power_info" data-index="{{index}}" data-type="{{ power.type }}" bindtap="onClickPowerInfo">
-      <view class="power_info_text">
-        <view class="power_info_text_title">
-          {{power.title}}
-          <view class="power_info_text_tag" wx:if="{{power.tag}}">{{power.tag}}</view>
+<view class="app-container">
+    <view class="bg-orb orb-1"></view>
+    <view class="bg-orb orb-2"></view>
+    <view class="bg-star star-1"></view>
+    <view class="bg-star star-2"></view>
+    <view class="top-header">
+        <view class="header-gradient">
+            <image class="header-bg-image" mode="aspectFill" src="{{headerBg}}" wx:if="{{headerBg}}"></image>
+            <view class="soft-cloud cloud-1" wx:if="{{!headerBg}}"></view>
+            <view class="soft-cloud cloud-2" wx:if="{{!headerBg}}"></view>
+            <view class="header-asset-layer" wx:if="{{!headerBg&&headerImages.length>0}}">
+                <image class="header-asset asset-{{index}}" mode="aspectFit" src="{{item}}" wx:for="{{headerImages}}" wx:key="*this"></image>
+            </view>
+            <block wx:if="{{!headerBg&&headerImages.length===0}}">
+                <view class="header-character char-round">
+                    <view class="char-eye eye-left"></view>
+                    <view class="char-eye eye-right"></view>
+                    <view class="char-mouth"></view>
+                    <view class="char-blush blush-left"></view>
+                    <view class="char-blush blush-right"></view>
+                </view>
+                <view class="header-character char-cat">
+                    <view class="cat-ear cat-ear-left"></view>
+                    <view class="cat-ear cat-ear-right"></view>
+                    <view class="char-eye eye-left"></view>
+                    <view class="char-eye eye-right"></view>
+                    <view class="char-mouth"></view>
+                    <view class="char-blush blush-left"></view>
+                    <view class="char-blush blush-right"></view>
+                </view>
+                <view class="header-character char-bunny">
+                    <view class="bunny-ear bunny-ear-left"></view>
+                    <view class="bunny-ear bunny-ear-right"></view>
+                    <view class="char-eye eye-left"></view>
+                    <view class="char-eye eye-right"></view>
+                    <view class="char-mouth"></view>
+                    <view class="char-blush blush-left"></view>
+                    <view class="char-blush blush-right"></view>
+                </view>
+            </block>
+            <view class="tiny-label label-a" wx:if="{{!headerBg}}">软糖衣柜</view>
+            <view class="tiny-label label-b" wx:if="{{!headerBg}}">今日搭配</view>
         </view>
-        <view class="power_info_text_tip">{{power.tip}}</view>
-      </view>
-      <image wx:if="{{!power.showItem && power.item.length}}" class="power_info_more" src="../../images/arrow.svg"></image>
-      <image wx:if="{{power.showItem && power.item.length}}" class="power_info_less" src="../../images/arrow.svg"></image>
-      <image wx:if="{{!power.item.length}}" class="power_item_icon" src="../../images/arrow.svg"></image>
-    </view>
-    <view wx:if="{{power.showItem}}">
-      <view wx:key="title" wx:for="{{power.item}}">
-        <view class="line"></view>
-        <view class="power_item" bindtap="jumpPage" data-type="{{ item.type }}" data-page="{{item.page}}">
-          <view class="power_item_title">{{item.title}}</view>
-          <image class="power_item_icon" src="../../images/arrow.svg"></image>
+        <view bindtap="goBack" class="kawaii-back">
+            <view class="kawaii-back-icon">
+                <view class="kawaii-back-stroke"></view>
+            </view>
+            <text class="kawaii-back-label">返回</text>
         </view>
-      </view>
     </view>
-  </view>
-  <cloud-tip-modal showTipProps="{{showTip}}" title="{{title}}" content="{{content}}"></cloud-tip-modal>
+    <view class="profile-card kawaii-card">
+        <view class="title-row">
+            <view class="title-left">
+                <text class="closet-title">{{wardrobeName}}</text>
+                <text class="closet-subtitle">给她准备今天要拿的衣服</text>
+            </view>
+            <button class="invite-text share-button" open-type="share">分享</button>
+            <view bindtap="goManage" class="settings-icon">设置</view>
+        </view>
+        <view class="notice-row">
+            <view class="notice-face"></view>
+            <text class="notice-text">点右侧小圆脸加入拿衣清单，保存后两个人都能看到</text>
+        </view>
+        <view class="tabs-row">
+            <view bindtap="switchTab" class="tab-item {{activeTab===0?'active':''}}" data-tab="0">菜单 {{count}}</view>
+            <view bindtap="switchTab" class="tab-item {{activeTab===1?'active':''}}" data-tab="1">计划</view>
+            <view bindtap="switchTab" class="tab-item {{activeTab===2?'active':''}}" data-tab="2">任务 {{taskBadgeCount}}</view>
+            <view bindtap="switchTab" class="tab-item {{activeTab===3?'active':''}}" data-tab="3">关于</view>
+            <view bindtap="toggleSearch" class="search-mini">搜索</view>
+        </view>
+        <view class="search-box" wx:if="{{showSearch}}">
+            <view class="search-input-wrap">
+                <input bindinput="onSearch" class="search-input" focus="{{showSearch}}" placeholder="搜索名称、分类、颜色或备注" value="{{searchKeyword}}"></input>
+                <view bindtap="clearSearch" class="search-clear" wx:if="{{searchKeyword}}">x</view>
+            </view>
+            <view class="search-meta" wx:if="{{searchResultText}}">
+                <text>{{searchResultText}}</text>
+            </view>
+        </view>
+    </view>
+    <view class="main-content" wx:if="{{activeTab===0}}">
+        <scroll-view scroll-y class="side-bar" scroll-into-view="{{sideScrollIntoView}}" scroll-with-animation="{{false}}" show-scrollbar="{{false}}">
+            <view bindtap="switchCat" class="side-item {{activeCat===index?'active':''}}" data-index="{{index}}" id="side-cat-{{index}}" wx:for="{{groupedItems}}" wx:key="id">
+                <text class="side-rank">{{index+1}}</text>
+                <text class="side-name">{{item.name}}</text>
+            </view>
+            <view style="height:140rpx;"></view>
+        </scroll-view>
+        <scroll-view bindscroll="onItemListScroll" class="item-list" scroll-into-view="{{scrollIntoView}}" scroll-with-animation="{{false}}" scroll-y="{{!isDragging}}" show-scrollbar="{{false}}">
+            <view class="search-empty search-empty-top" wx:if="{{showSearch&&searchKeyword&&count===0}}">
+                <view class="empty-face"></view>
+                <text>没有找到匹配的衣服</text>
+            </view>
+            <view class="cat-section" id="{{item.id}}" wx:if="{{!(showSearch&&searchKeyword&&count===0)}}" wx:for="{{groupedItems}}" wx:for-index="groupIndex" wx:key="id">
+                <view class="cat-title">
+                    <view class="cat-title-dot"></view>
+                    <text>{{groupIndex+1}}. {{item.name}}</text>
+                    <text class="cat-count">({{item.items.length}})</text>
+                </view>
+                <view class="cloth-drag-list" id="index-drag-list-{{groupIndex}}">
+                    <view bindlongpress="onDragStart" bindtap="enterItem" bindtouchcancel="onDragEnd" bindtouchend="onDragEnd" bindtouchmove="onDragMove" bindtouchstart="onDragTouchStart" class="{{cloth.cls}} index-drag-row index-drag-row-{{groupIndex}}" data-group-index="{{groupIndex}}" data-id="{{cloth._id}}" data-index="{{clothIndex}}" wx:for="{{item.items}}" wx:for-index="clothIndex" wx:for-item="cloth" wx:key="_id">
+                        <view class="cloth-rank">
+                            <text>{{cloth.display_rank}}</text>
+                        </view>
+                        <view class="cloth-img-box kawaii-card">
+                            <image mode="aspectFill" src="{{cloth.displayUrl||cloth.url}}"></image>
+                        </view>
+                        <view class="cloth-info">
+                            <text class="cloth-name">{{cloth.name}}</text>
+                            <text class="cloth-sub" wx:if="{{cloth.color}}">{{cloth.color}}</text>
+                            <text class="cloth-status {{cloth.statusClass}}" wx:if="{{cloth.isInUse||cloth.isStored}}">{{cloth.wearStatusText}}</text>
+                        </view>
+                        <view class="cloth-drag-handle">
+                            <text>=</text>
+                        </view>
+                        <view catchtap="toggleClothSelection" class="cloth-select-btn {{cloth.selected?'selected':''}} {{cloth.isInUse?'in-use':''}}" data-id="{{cloth._id}}">
+                            <text>{{cloth.selectText}}</text>
+                        </view>
+                    </view>
+                </view>
+                <view class="empty-cat" wx:if="{{item.items.length===0}}">
+                    <view class="empty-face"></view>
+                    <text>{{showSearch&&searchMode==='item'?'这个分类没有匹配结果':'这个分类还没有衣服'}}</text>
+                </view>
+            </view>
+            <view class="loading-more" wx:if="{{loadingMoreItems&&count>0}}">
+                <text>正在同步更多衣服...</text>
+            </view>
+            <view style="height:220rpx;"></view>
+        </scroll-view>
+    </view>
+    <view class="drag-floating" style="top:{{floatY}}px;left:{{floatLeft}}px;width:{{floatWidth}}px;" wx:if="{{isDragging}}">
+        <view class="cloth-row cloth-floating {{floatItem.selected?'selected':''}}">
+            <view class="cloth-rank">
+                <text>{{floatRank}}</text>
+            </view>
+            <view class="cloth-img-box kawaii-card">
+                <image mode="aspectFill" src="{{floatItem.displayUrl||floatItem.url}}"></image>
+            </view>
+            <view class="cloth-info">
+                <text class="cloth-name">{{floatItem.name}}</text>
+                <text class="cloth-sub" wx:if="{{floatItem.color}}">{{floatItem.color}}</text>
+                <text class="cloth-status {{floatItem.statusClass}}" wx:if="{{floatItem.isInUse||floatItem.isStored}}">{{floatItem.wearStatusText}}</text>
+            </view>
+            <view class="cloth-drag-handle">
+                <text>=</text>
+            </view>
+            <view class="cloth-select-btn {{floatItem.selected?'selected':''}} {{floatItem.isInUse?'in-use':''}}">
+                <text>{{floatItem.selectText}}</text>
+            </view>
+        </view>
+    </view>
+    <scroll-view scroll-y class="tab-content" style="height:100%" wx:if="{{activeTab===1}}">
+        <view class="section-header">
+            <text class="section-title">我的计划</text>
+            <view bindtap="togglePlanInput" class="add-mini-btn kawaii-btn">+</view>
+        </view>
+        <view class="input-row" wx:if="{{showPlanInput}}">
+            <input bindinput="onPlanInput" class="kawaii-input-inline" placeholder="新计划" value="{{newPlanText}}"></input>
+            <view bindtap="addPlan" class="confirm-btn kawaii-btn">OK</view>
+        </view>
+        <view class="todo-item" wx:for="{{plans}}" wx:key="id">
+            <view bindtap="togglePlanDone" class="todo-check {{item.done?'done':''}}" data-index="{{index}}">
+                <text>{{item.done?'OK':''}}</text>
+            </view>
+            <text class="todo-text {{item.done?'strikethrough':''}}">{{item.text}}</text>
+            <view bindtap="deletePlan" class="todo-del" data-index="{{index}}">x</view>
+        </view>
+        <view class="empty-tip" wx:if="{{plans.length===0}}">
+            <text>还没有计划</text>
+        </view>
+        <view style="height:200rpx;"></view>
+    </scroll-view>
+    <scroll-view scroll-y class="tab-content" style="height:100%" wx:if="{{activeTab===2}}">
+        <view class="section-header">
+            <text class="section-title">我的任务</text>
+            <view bindtap="toggleTaskInput" class="add-mini-btn kawaii-btn">+</view>
+        </view>
+        <view bindtap="openPickPanel" class="pick-package-card" wx:if="{{selectedItems.length>0}}">
+            <view class="package-face">
+                <view class="package-eye eye-left"></view>
+                <view class="package-eye eye-right"></view>
+            </view>
+            <view class="package-main">
+                <text class="package-title">拿衣包裹</text>
+                <text class="package-sub">已选择 {{selectedItems.length}} 件衣服</text>
+                <text class="package-status-tip" wx:if="{{storedSelectedCount>0}}">含 {{storedSelectedCount}} 件已收纳</text>
+                <text class="package-time" wx:if="{{selectedUpdatedText}}">保存于 {{selectedUpdatedText}}</text>
+            </view>
+            <view class="package-preview">
+                <image class="package-thumb thumb-{{index}}" mode="aspectFill" src="{{item.displayUrl||item.url}}" wx:for="{{pickPackagePreview}}" wx:key="_id"></image>
+            </view>
+            <view class="package-open">打开</view>
+        </view>
+        <view class="input-row" wx:if="{{showTaskInput}}">
+            <input bindinput="onTaskInput" class="kawaii-input-inline" placeholder="新任务" value="{{newTaskText}}"></input>
+            <view bindtap="addTask" class="confirm-btn kawaii-btn">OK</view>
+        </view>
+        <view class="todo-item" wx:for="{{tasks}}" wx:key="id">
+            <view bindtap="toggleTaskDone" class="todo-check {{item.done?'done':''}}" data-index="{{index}}">
+                <text>{{item.done?'OK':''}}</text>
+            </view>
+            <text class="todo-text {{item.done?'strikethrough':''}}">{{item.text}}</text>
+            <view bindtap="deleteTask" class="todo-del" data-index="{{index}}">x</view>
+        </view>
+        <view class="empty-tip" wx:if="{{tasks.length===0&&selectedItems.length===0}}">
+            <text>还没有任务</text>
+        </view>
+        <view style="height:200rpx;"></view>
+    </scroll-view>
+    <scroll-view scroll-y class="tab-content" style="height:100%" wx:if="{{activeTab===3}}">
+        <view class="about-card kawaii-card">
+            <text class="about-name">{{wardrobeName}}</text>
+            <text class="about-desc">{{about.desc}}</text>
+            <view class="about-row">
+                <text class="about-label">衣服总数</text>
+                <text class="about-val">{{count}}</text>
+            </view>
+            <view class="about-row">
+                <text class="about-label">分类数量</text>
+                <text class="about-val">{{groupedItems.length}}</text>
+            </view>
+        </view>
+        <view style="height:200rpx;"></view>
+    </scroll-view>
+    <view class="pick-bar" wx:if="{{activeTab===0&&selectedItems.length>0}}">
+        <view bindtap="openPickPanel" class="pick-summary">
+            <view class="pick-bag">list</view>
+            <view class="pick-texts">
+                <text class="pick-title">已选 {{selectedItems.length}} 件</text>
+                <text class="pick-sub">点击查看拿衣清单</text>
+            </view>
+        </view>
+        <view bindtap="clearSelection" class="pick-clear">清空</view>
+        <view bindtap="confirmSelection" class="pick-save">保存</view>
+    </view>
+    <view bindtap="closePickPanel" class="pick-mask" wx:if="{{showPickPanel}}"></view>
+    <view catchtap="noop" class="pick-panel" wx:if="{{showPickPanel}}">
+        <view class="pick-panel-header">
+            <view>
+                <text class="pick-panel-title">拿衣清单</text>
+                <text class="pick-panel-sub">她选中的衣服会保存在这个衣柜里</text>
+            </view>
+            <view bindtap="closePickPanel" class="pick-panel-close">x</view>
+        </view>
+        <scroll-view scroll-y class="pick-list" show-scrollbar="{{false}}">
+            <view class="pick-item" wx:for="{{selectedItems}}" wx:key="_id">
+                <view class="pick-rank">{{item.selected_rank}}</view>
+                <image class="pick-img" mode="aspectFill" src="{{item.displayUrl||item.url}}"></image>
+                <view class="pick-info">
+                    <text class="pick-name">{{item.name}}</text>
+                    <text class="pick-category">{{item.category}}</text>
+                    <text class="pick-status {{item.statusClass}}" wx:if="{{item.isStored}}">已收纳</text>
+                </view>
+                <view bindtap="removeSelectedItem" class="pick-remove" data-id="{{item._id}}">移除</view>
+            </view>
+        </scroll-view>
+        <view class="pick-panel-actions">
+            <view bindtap="clearSelection" class="pick-action-clear">清空清单</view>
+            <view bindtap="confirmSelection" class="pick-action-save">保存清单</view>
+        </view>
+    </view>
+    <item-action-panel bind:close="closeItemPanel" bind:edit="editPanelItem" bind:statuschange="markPanelItemStatus" item="{{panelItem}}" show="{{showItemPanel}}"></item-action-panel>
+    <view bindtap="goAdd" class="fab-add kawaii-btn {{selectedItems.length>0?'fab-lift':''}}" wx:if="{{activeTab===0}}">
+        <text>+</text>
+    </view>
 </view>

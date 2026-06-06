@@ -1,0 +1,155 @@
+<view class="home-page">
+    <view class="bg-dot dot-one"></view>
+    <view class="bg-dot dot-two"></view>
+    <view class="bg-dot dot-three"></view>
+    <view class="hero-card">
+        <view class="hero-text">
+            <text class="eyebrow">🧸 Kuma Closet</text>
+            <text class="hero-title">我的衣柜小屋</text>
+            <text class="hero-subtitle">选择一个衣柜，开始今天的可爱搭配。</text>
+        </view>
+        <view class="hero-stickers">
+            <image class="hero-sticker sticker-main" mode="aspectFit" src="/images/home/bear-wave.png"></image>
+            <image class="hero-sticker sticker-small sticker-left" mode="aspectFit" src="/images/home/bear-watermelon.png"></image>
+            <image class="hero-sticker sticker-small sticker-right" mode="aspectFit" src="/images/home/bear-cry.png"></image>
+        </view>
+        <view class="hero-pill">
+            <text>长按衣柜可以管理或删除</text>
+        </view>
+    </view>
+    <view class="verify-card" wx:if="{{isVerified}}">
+        <image class="verify-avatar" mode="aspectFill" src="{{verifiedUser.avatarUrl}}" wx:if="{{verifiedUser.avatarUrl}}"></image>
+        <view class="verify-avatar verify-avatar-empty" wx:else>
+            <text>✓</text>
+        </view>
+        <view class="verify-info">
+            <text class="verify-title">用户已登录</text>
+            <text class="verify-name">{{verifiedUser.nickName}}</text>
+        </view>
+        <view bindtap="openJoinModal" class="verify-join">
+            <text>加入共享</text>
+        </view>
+        <view bindtap="logoutVerify" class="verify-logout">
+            <text>退出</text>
+        </view>
+    </view>
+    <view class="section-head">
+        <view>
+            <text class="section-title">衣柜列表</text>
+            <text class="section-subtitle">每个衣柜都是一个独立的小包裹</text>
+        </view>
+        <text class="section-count">{{wardrobeCount}} 个</text>
+    </view>
+    <view class="empty-card" wx:if="{{isEmpty}}">
+        <image class="empty-sticker" mode="aspectFit" src="/images/home/bear-shopping.png"></image>
+        <text class="empty-title">还没有衣柜</text>
+        <text class="empty-desc">先新建一个衣柜，再开始放衣服。</text>
+    </view>
+    <view class="wardrobe-list">
+        <view bindlongpress="onLongPress" bindtap="enterWardrobe" class="wardrobe-card {{item.themeClass}}" data-id="{{item._id}}" data-name="{{item.displayName}}" wx:for="{{wardrobes}}" wx:key="_id">
+            <view class="card-rank">{{item.rankText}}</view>
+            <image class="card-sticker" mode="aspectFit" src="{{item.sticker}}"></image>
+            <view class="card-content">
+                <view class="name-row">
+                    <text class="wardrobe-icon">{{item.displayIcon}}</text>
+                    <text class="wardrobe-name">{{item.displayName}}</text>
+                </view>
+                <text class="wardrobe-desc">{{item.displayDesc}}</text>
+                <view class="card-tags">
+                    <text class="tag">{{item.roleText}}</text>
+                    <text class="tag tag-soft">点击进入</text>
+                    <text class="tag tag-soft">长按管理</text>
+                </view>
+            </view>
+            <view class="enter-bubble">
+                <text>›</text>
+            </view>
+        </view>
+        <view bindtap="openCreateModal" class="add-card">
+            <view class="add-plus">+</view>
+            <view class="add-content">
+                <text class="add-title">新建衣柜</text>
+                <text class="add-desc">给她再建一个可爱的小空间</text>
+            </view>
+            <image class="add-sticker" mode="aspectFit" src="/images/home/bear-lucky.png"></image>
+        </view>
+    </view>
+    <view bindtap="closeSheet" class="modal-mask" wx:if="{{showActionSheet}}">
+        <view catchtap="noop" class="action-sheet">
+            <view class="sheet-handle"></view>
+            <image class="sheet-sticker" mode="aspectFit" src="/images/home/bear-phone.png"></image>
+            <text class="sheet-title">{{selectedName}}</text>
+            <text class="sheet-subtitle">要怎么整理这个衣柜？</text>
+            <view bindtap="goManage" class="sheet-btn manage-btn">
+                <text class="sheet-icon">⚙️</text>
+                <text>管理衣柜</text>
+            </view>
+            <view bindtap="deleteWardrobe" class="sheet-btn delete-btn">
+                <text class="sheet-icon">🗑️</text>
+                <text>删除衣柜</text>
+            </view>
+            <view bindtap="closeSheet" class="sheet-btn cancel-btn">
+                <text>取消</text>
+            </view>
+        </view>
+    </view>
+    <view bindtap="closeCreateModal" class="modal-mask" wx:if="{{showCreateModal}}">
+        <view catchtap="noop" class="create-sheet">
+            <view class="sheet-handle"></view>
+            <image class="sheet-sticker" mode="aspectFit" src="/images/home/bear-lucky.png"></image>
+            <text class="sheet-title">新建衣柜</text>
+            <text class="sheet-subtitle">给衣柜取名，也可以顺手写备注。</text>
+            <view class="form-block">
+                <text class="form-label">衣柜名称</text>
+                <input bindinput="onNewNameInput" class="form-input" maxlength="18" placeholder="例如：春夏小裙子" placeholder-class="input-placeholder" value="{{newWardrobeName}}"></input>
+            </view>
+            <view class="form-block">
+                <text class="form-label">衣柜备注</text>
+                <textarea bindinput="onNewDescInput" class="form-textarea" maxlength="60" placeholder="例如：常穿、约会、通勤都放这里" placeholder-class="input-placeholder" value="{{newWardrobeDesc}}"></textarea>
+            </view>
+            <view class="create-actions">
+                <view bindtap="closeCreateModal" class="sheet-btn cancel-create-btn">
+                    <text>取消</text>
+                </view>
+                <view bindtap="createWardrobe" class="sheet-btn confirm-create-btn">
+                    <text>创建衣柜</text>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view bindtap="closeJoinModal" class="modal-mask" wx:if="{{showJoinModal}}">
+        <view catchtap="noop" class="create-sheet">
+            <view class="sheet-handle"></view>
+            <image class="sheet-sticker" mode="aspectFit" src="/images/home/bear-lucky.png"></image>
+            <text class="sheet-title">加入共享衣柜</text>
+            <text class="sheet-subtitle">输入对方给你的共享码，就能一起查看和整理衣柜。</text>
+            <view class="form-block">
+                <text class="form-label">共享码</text>
+                <input bindinput="onShareCodeInput" class="form-input share-code-input" maxlength="12" placeholder="例如：KUMA1234" placeholder-class="input-placeholder" value="{{shareCodeInput}}"></input>
+            </view>
+            <view class="create-actions">
+                <view bindtap="closeJoinModal" class="sheet-btn cancel-create-btn">
+                    <text>取消</text>
+                </view>
+                <view bindtap="joinSharedWardrobe" class="sheet-btn confirm-create-btn">
+                    <text>{{isJoiningShare?'加入中...':'加入衣柜'}}</text>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="modal-mask verify-mask" wx:if="{{showVerifyModal}}">
+        <view catchtap="noop" class="verify-sheet">
+            <view class="sheet-handle"></view>
+            <image class="sheet-sticker" mode="aspectFit" src="/images/home/bear-phone.png"></image>
+            <text class="sheet-title">注册 / 登录</text>
+            <text class="sheet-subtitle">使用微信用户身份登录，每个用户都有自己的衣柜。</text>
+            <view class="verify-lock">
+                <text class="verify-lock-icon">🔒</text>
+                <text>首次登录会自动注册，登录状态保留 30 天</text>
+            </view>
+            <view bindtap="verifyUser" class="sheet-btn confirm-create-btn verify-btn {{isVerifying?'verify-btn-disabled':''}}">
+                <text>{{isVerifying?'登录中...':'微信用户登录'}}</text>
+            </view>
+        </view>
+    </view>
+</view>

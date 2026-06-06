@@ -1,0 +1,57 @@
+.container { padding: 40rpx; }
+
+.header {
+  margin-bottom: 40rpx;
+  text-align: center;
+}
+.title {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: var(--kawaii-blue);
+  text-shadow: 2rpx 2rpx 0rpx #5C4B51;
+}
+
+.cat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  background: var(--kawaii-pink);
+}
+.cat-name {
+  font-weight: bold;
+  color: #FFF;
+  font-size: 32rpx;
+}
+.delete-btn {
+  background: #FFF;
+  border: var(--border-thick);
+  border-radius: 50%;
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+}
+
+.add-cat-box {
+  display: flex;
+  padding: 20rpx;
+  margin-top: 40rpx;
+  align-items: center;
+}
+.kawaii-input {
+  flex: 1;
+  height: 80rpx;
+  border: var(--border-thick);
+  border-radius: var(--radius-lg);
+  padding: 0 20rpx;
+  background: var(--bg-color);
+  margin-right: 20rpx;
+}
+.add-btn {
+  width: 120rpx;
+  height: 80rpx;
+}

@@ -1,0 +1,155 @@
+<view class="container">
+  <view class="top-nav">
+    <view class="kawaii-back" bindtap="goBack"><view class="kawaii-back-icon"><view class="kawaii-back-stroke"></view></view><text class="kawaii-back-label">返回</text></view>
+    <text class="nav-title">管理衣柜</text>
+    <view class="save-top-btn" bindtap="saveAll">
+      <text>保存</text>
+    </view>
+  </view>
+
+  <scroll-view scroll-y="{{!isDragging}}" class="page-scroll" show-scrollbar="{{false}}">
+    <view class="section kawaii-card">
+      <view class="section-header">
+        <text class="section-title">衣柜信息</text>
+      </view>
+
+      <view class="field-item">
+        <text class="field-label">名称</text>
+        <input class="field-input" value="{{wardrobeName}}" bindinput="onNameInput" placeholder="请输入衣柜名称" />
+      </view>
+
+      <view class="field-item">
+        <text class="field-label">描述</text>
+        <input class="field-input" value="{{wardrobeDesc}}" bindinput="onDescInput" placeholder="写一句衣柜说明" />
+      </view>
+    </view>
+
+    <view class="section kawaii-card share-section" wx:if="{{isOwner}}">
+      <view class="section-header">
+        <view class="section-title-wrap">
+          <text class="section-title">共享授权</text>
+          <text class="section-tip">把共享码发给别人，对方登录后可以加入并整理这个衣柜</text>
+        </view>
+      </view>
+
+      <view class="share-code-card" wx:if="{{shareCode}}">
+        <text class="share-code-label">共享码</text>
+        <text class="share-code-text">{{shareCode}}</text>
+        <text class="share-code-status">{{shareEnabled ? '已开启' : '已关闭'}}</text>
+      </view>
+
+      <view class="share-actions">
+        <view class="share-action primary" bindtap="enableShare">
+          <text>{{shareCode ? '重新开启' : '生成共享码'}}</text>
+        </view>
+        <view class="share-action" wx:if="{{shareCode}}" bindtap="copyShareCode">
+          <text>复制共享码</text>
+        </view>
+        <view class="share-action danger" wx:if="{{shareEnabled}}" bindtap="disableShare">
+          <text>关闭共享</text>
+        </view>
+      </view>
+
+      <view class="shared-user-list" wx:if="{{sharedUsers.length>0}}">
+        <text class="shared-user-title">已授权用户</text>
+        <view class="shared-user" wx:for="{{sharedUsers}}" wx:key="openid">
+          <image class="shared-avatar" wx:if="{{item.avatarUrl}}" src="{{item.avatarUrl}}" mode="aspectFill"></image>
+          <view class="shared-avatar shared-avatar-empty" wx:else>
+            <text>人</text>
+          </view>
+          <text class="shared-name">{{item.nickName || '共享用户'}}</text>
+          <view class="shared-remove" bindtap="removeSharedUser" data-openid="{{item.openid}}">
+            <text>移除</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section kawaii-card share-section" wx:else>
+      <view class="section-header">
+        <view class="section-title-wrap">
+          <text class="section-title">共享衣柜</text>
+          <text class="section-tip">这是别人授权给你的衣柜，你可以查看和整理内容</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="section kawaii-card">
+      <view class="section-header">
+        <view class="section-title-wrap">
+          <text class="section-title">分类排序</text>
+          <text class="section-tip">长按分类后上下拖动，顺序会同步到首页菜单</text>
+        </view>
+        <view class="add-cat-btn kawaii-btn" bindtap="toggleAddCat">+</view>
+      </view>
+
+      <view class="add-cat-row" wx:if="{{showAddCat}}">
+        <input class="cat-input" placeholder="新分类名称" bindinput="onNewCatInput" value="{{newCatName}}" />
+        <view class="confirm-btn kawaii-btn" bindtap="addCategory">OK</view>
+      </view>
+
+      <view class="drag-list" id="drag-list">
+        <view
+          class="{{item.cls}}"
+          wx:for="{{categories}}"
+          wx:key="_id"
+          id="cat-{{index}}"
+          data-index="{{index}}"
+          bindtap="enterCategory"
+          bindtouchstart="onDragTouchStart"
+          bindlongpress="onDragStart"
+          bindtouchmove="onDragMove"
+          bindtouchend="onDragEnd"
+          bindtouchcancel="onDragEnd"
+        >
+          <view class="cat-rank">
+            <text>{{index + 1}}</text>
+          </view>
+          <view class="drag-handle">
+            <text class="handle-icon">=</text>
+          </view>
+          <text class="cat-name">{{item.name}}</text>
+          <text class="cat-count">{{item.count}} 件</text>
+          <text class="cat-arrow">></text>
+        </view>
+      </view>
+
+      <view class="empty-tip" wx:if="{{categories.length===0}}">
+        <text>还没有分类 </text>
+      </view>
+    </view>
+
+    <view class="section kawaii-card">
+      <view class="section-header">
+        <text class="section-title">统计</text>
+      </view>
+
+      <view class="stats-grid">
+        <view class="stat-box">
+          <text class="stat-num">{{totalItems}}</text>
+          <text class="stat-label">衣服总数</text>
+        </view>
+        <view class="stat-box">
+          <text class="stat-num">{{categories.length}}</text>
+          <text class="stat-label">分类数量</text>
+        </view>
+      </view>
+    </view>
+
+    <view style="height:80rpx;"></view>
+  </scroll-view>
+
+  <view class="drag-floating" wx:if="{{isDragging}}" style="top:{{floatY}}px;">
+    <view class="cat-floating">
+      <view class="cat-rank">
+        <text>{{floatRank}}</text>
+      </view>
+      <view class="drag-handle">
+        <text class="handle-icon">=</text>
+      </view>
+      <text class="cat-name">{{floatItem.name}}</text>
+      <text class="cat-count">{{floatItem.count}} 件</text>
+    </view>
+  </view>
+</view>
+

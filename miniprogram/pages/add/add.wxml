@@ -1,0 +1,99 @@
+<view class="container">
+  
+  
+  <view class="top-row">
+    <view class="kawaii-back" bindtap="goBack">
+      <view class="kawaii-back-icon"><view class="kawaii-back-stroke"></view></view>
+      <text class="kawaii-back-label">返回</text>
+    </view>
+    <view class="top-label">
+      <text>新增衣服</text>
+    </view>
+  </view>
+
+  <scroll-view class="page-scroll" scroll-y show-scrollbar="{{false}}">
+    <view class="hero-card">
+      <view class="hero-copy">
+        <text class="eyebrow">Kuma Closet</text>
+        <text class="title-text">给衣柜添一件小可爱</text>
+      </view>
+      <image class="hero-sticker" src="/images/home/bear-shopping.png" mode="aspectFit"></image>
+    </view>
+
+    <view class="upload-box kawaii-card" bindtap="chooseImage">
+      <image wx:if="{{itemUrl}}" src="{{itemUrl}}" mode="aspectFill" class="preview-img"></image>
+      <view wx:else class="upload-placeholder">
+        <image class="upload-sticker" src="/images/home/bear-phone.png" mode="aspectFit"></image>
+        <text class="upload-hint">点击选择衣服照片</text>
+        <text class="upload-sub">可选，没传照片会用默认图</text>
+      </view>
+      <view class="upload-badge">
+        <text>{{itemUrl ? '重新选择' : '添加照片'}}</text>
+      </view>
+    </view>
+
+    <view class="form-box kawaii-card">
+      <view class="section-head">
+        <text class="section-title">衣服信息</text>
+      </view>
+
+      <view class="form-item">
+        <text class="label">名称（可选）</text>
+        <input class="kawaii-input" placeholder="例如：粉色针织开衫" bindinput="onNameInput" value="{{name}}" />
+      </view>
+
+      <view class="form-item">
+        <text class="label">颜色 / 备注（可选）</text>
+        <input class="kawaii-input" placeholder="例如：粉色、白色蝴蝶结" bindinput="onColorInput" value="{{color}}" />
+      </view>
+    </view>
+
+    <view class="category-box kawaii-card">
+      <view class="section-head">
+        <view>
+          <text class="section-title">选择分类</text>
+        </view>
+        <view class="add-cat-toggle" bindtap="toggleCategoryInput">
+          <text>{{showCategoryInput ? '收起' : '+ 分类'}}</text>
+        </view>
+      </view>
+
+      <view class="category-grid">
+        <view
+          wx:for="{{categories}}"
+          wx:key="*this"
+          class="category-chip {{selectedCategory === item ? 'active' : ''}}"
+          bindtap="selectCategory"
+          data-category="{{item}}"
+        >
+          <text class="chip-dot"></text>
+          <text>{{item}}</text>
+        </view>
+      </view>
+
+      <view class="new-category-panel" wx:if="{{showCategoryInput}}">
+        <input
+          class="new-category-input"
+          placeholder="输入新分类，例如：帽子"
+          value="{{newCategoryName}}"
+          maxlength="12"
+          bindinput="onNewCategoryInput"
+        />
+        <view class="new-category-btn {{isSavingCategory ? 'disabled' : ''}}" bindtap="addCategory">
+          <text>{{isSavingCategory ? '添加中' : '添加'}}</text>
+        </view>
+      </view>
+
+      <view class="selected-tip has-value" wx:if="{{selectedCategory}}">
+        <text>已选择：{{selectedCategory}}</text>
+      </view>
+    </view>
+
+    <view class="save-btn kawaii-btn" bindtap="saveItem">
+      <text>保存到衣柜</text>
+    </view>
+
+    <view style="height:80rpx;"></view>
+  </scroll-view>
+</view>
+

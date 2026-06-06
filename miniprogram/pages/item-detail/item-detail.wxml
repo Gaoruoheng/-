@@ -1,0 +1,56 @@
+<view class="container">
+  <view class="top-nav">
+    <view class="kawaii-back" bindtap="goBack"><view class="kawaii-back-icon"><view class="kawaii-back-stroke"></view></view><text class="kawaii-back-label">返回</text></view>
+    <text class="nav-title">编辑衣服</text>
+  </view>
+
+  <scroll-view class="page-scroll" scroll-y>
+    <view class="img-section" bindtap="changeImage">
+      <image wx:if="{{item.url}}" src="{{item.url}}" mode="aspectFill" class="item-img"></image>
+      <view wx:else class="img-placeholder">
+        <text class="placeholder-text">点这里添加照片</text>
+      </view>
+      <view class="img-overlay">
+        <text>点一下换照片</text>
+      </view>
+    </view>
+
+    <view class="form-section kawaii-card">
+      <view class="field-item">
+        <text class="field-label">名称</text>
+        <input class="field-input" value="{{item.name}}" bindinput="onNameInput" placeholder="可以不填，会自动取名" />
+      </view>
+
+      <view class="field-item">
+        <text class="field-label">分类</text>
+        <picker bindchange="onCategoryChange" value="{{catIndex}}" range="{{categories}}">
+          <view class="field-picker">
+            <text>{{categories[catIndex] || item.category}}</text>
+            <text class="picker-arrow">></text>
+          </view>
+        </picker>
+      </view>
+
+      <view class="field-item">
+        <text class="field-label">颜色</text>
+        <input class="field-input" value="{{item.color}}" bindinput="onColorInput" placeholder="比如粉色、白色" />
+      </view>
+
+      <view class="field-item">
+        <text class="field-label">备注</text>
+        <textarea class="field-textarea" value="{{item.notes}}" bindinput="onNotesInput" placeholder="写点小备注"></textarea>
+      </view>
+    </view>
+
+    <view style="height: 180rpx;"></view>
+  </scroll-view>
+
+  <view class="bottom-actions">
+    <view class="delete-action" bindtap="deleteItem">
+      <text>删除</text>
+    </view>
+    <view class="save-action" bindtap="saveItem">
+      <text>保存</text>
+    </view>
+  </view>
+</view>
