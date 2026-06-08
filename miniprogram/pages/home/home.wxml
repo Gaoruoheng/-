@@ -1,17 +1,70 @@
-<view class="home-page">
+﻿<view class="home-page skin-{{selectedSkin}}">
     <view class="bg-dot dot-one"></view>
     <view class="bg-dot dot-two"></view>
     <view class="bg-dot dot-three"></view>
     <view class="hero-card">
+        <view class="hero-lights"></view>
+        <view class="floor-orbit"></view>
+        <view class="palace-column column-left"></view>
+        <view class="palace-column column-right"></view>
+        <view class="chandelier"></view>
         <view class="hero-text">
             <text class="eyebrow">🧸 Kuma Closet</text>
-            <text class="hero-title">我的衣柜小屋</text>
-            <text class="hero-subtitle">选择一个衣柜，开始今天的可爱搭配。</text>
+            <block wx:if="{{selectedSkin == 'princess-castle'}}">
+                <text class="hero-title hero-title-castle">公主城堡</text>
+                <text class="hero-title hero-title-castle hero-title-castle-small">衣橱</text>
+            </block>
+            <text class="hero-title" wx:if="{{selectedSkin != 'princess-castle'}}">我的衣柜小屋</text>
+            <text class="hero-subtitle">{{selectedSkin == 'princess-castle' ? '选择一个衣柜，走进今天的魔法搭配大厅。' : '选择一个衣柜，开始今天的可爱搭配。'}}</text>
         </view>
         <view class="hero-stickers">
             <image class="hero-sticker sticker-main" mode="aspectFit" src="/images/home/bear-wave.png"></image>
             <image class="hero-sticker sticker-small sticker-left" mode="aspectFit" src="/images/home/bear-watermelon.png"></image>
             <image class="hero-sticker sticker-small sticker-right" mode="aspectFit" src="/images/home/bear-cry.png"></image>
+        </view>
+        <view class="window-arch"></view>
+        <view class="jewel-case"></view>
+        <view class="castle-ground"></view>
+        <view class="garden-rail"></view>
+        <view class="castle-stage" aria-hidden="true">
+            <view class="castle-flag"></view>
+            <view class="castle-keep">
+                <view class="keep-roof"></view>
+                <view class="keep-window"></view>
+                <view class="keep-door"></view>
+            </view>
+            <view class="castle-tower tower-left">
+                <view class="tower-roof"></view>
+                <view class="tower-window"></view>
+            </view>
+            <view class="castle-tower tower-mid-left">
+                <view class="tower-roof"></view>
+                <view class="tower-window"></view>
+            </view>
+            <view class="castle-tower tower-center">
+                <view class="tower-roof"></view>
+                <view class="tower-window"></view>
+            </view>
+            <view class="castle-tower tower-mid-right">
+                <view class="tower-roof"></view>
+                <view class="tower-window"></view>
+            </view>
+            <view class="castle-tower tower-right">
+                <view class="tower-roof"></view>
+                <view class="tower-window"></view>
+            </view>
+            <view class="castle-gate">
+                <view class="gate-door"></view>
+            </view>
+            <view class="castle-stairs">
+                <view></view>
+                <view></view>
+                <view></view>
+            </view>
+            <view class="magic-trail"></view>
+            <view class="hero-spark spark-a">✦</view>
+            <view class="hero-spark spark-b">✧</view>
+            <view class="hero-spark spark-c">✦</view>
         </view>
         <view class="hero-pill">
             <text>长按衣柜可以管理或删除</text>
@@ -36,9 +89,15 @@
     <view class="section-head">
         <view>
             <text class="section-title">衣柜列表</text>
-            <text class="section-subtitle">每个衣柜都是一个独立的小包裹</text>
+            <text class="section-subtitle">{{selectedSkin == 'princess-castle' ? '每个衣柜都是城堡房间' : '每个衣柜都是一个独立的小包裹'}}</text>
         </view>
-        <text class="section-count">{{wardrobeCount}} 个</text>
+        <view class="section-actions">
+            <view bindtap="openSkinSheet" class="skin-switch">
+                <text class="skin-switch-star">✦</text>
+                <text>换肤</text>
+            </view>
+            <text class="section-count">{{wardrobeCount}} 个</text>
+        </view>
     </view>
     <view class="empty-card" wx:if="{{isEmpty}}">
         <image class="empty-sticker" mode="aspectFit" src="/images/home/bear-shopping.png"></image>
@@ -47,8 +106,79 @@
     </view>
     <view class="wardrobe-list">
         <view bindlongpress="onLongPress" bindtap="enterWardrobe" class="wardrobe-card {{item.themeClass}}" data-id="{{item._id}}" data-name="{{item.displayName}}" wx:for="{{wardrobes}}" wx:key="_id">
+            <view class="room-light"></view>
+            <view class="room-plaque"></view>
             <view class="card-rank">{{item.rankText}}</view>
-            <image class="card-sticker" mode="aspectFit" src="{{item.sticker}}"></image>
+            <!-- 梦境感横条效果 -->
+            <view class="dream-bar">
+                <view class="dream-shimmer"></view>
+                <view class="dream-particle particle-1">✦</view>
+                <view class="dream-particle particle-2">✧</view>
+                <view class="dream-particle particle-3">✦</view>
+                <view class="dream-glow"></view>
+            </view>
+            
+            <!-- 5种装饰元素，根据index循环显示 -->
+                        <!-- 5种装饰元素，根据index循环显示 -->
+            <view class="room-ornament ornament-type-{{index % 5}}" wx:if="{{selectedSkin == 'princess-castle'}}">
+                <!-- 类型0: 紫藤月窗 -->
+                <block wx:if="{{index % 5 === 0}}">
+                    <view class="moon-ring"></view>
+                    <view class="wisteria-branch"></view>
+                    <view class="wisteria-petal petal-one"></view>
+                    <view class="wisteria-petal petal-two"></view>
+                    <view class="wisteria-petal petal-three"></view>
+                    <view class="wisteria-petal petal-four"></view>
+                    <view class="wisteria-petal petal-five"></view>
+                    <view class="wisteria-petal petal-six"></view>
+                    <view class="gold-tassel"></view>
+                </block>
+                
+                <!-- 类型1: 祥云金铃 -->
+                <block wx:if="{{index % 5 === 1}}">
+                    <view class="cloud-layer cloud-back"></view>
+                    <view class="cloud-layer cloud-mid"></view>
+                    <view class="cloud-layer cloud-front"></view>
+                    <view class="golden-bell"></view>
+                    <view class="bell-tassel"></view>
+                </block>
+                
+                <!-- 类型2: 蝴蝶梅花 -->
+                <block wx:if="{{index % 5 === 2}}">
+                    <view class="plum-branch"></view>
+                    <view class="plum-blossom blossom-one"></view>
+                    <view class="plum-blossom blossom-two"></view>
+                    <view class="plum-blossom blossom-three"></view>
+                    <view class="butterfly">
+                        <view class="wing wing-left"></view>
+                        <view class="wing wing-right"></view>
+                        <view class="butterfly-body"></view>
+                    </view>
+                </block>
+                
+                <!-- 类型3: 宝镜流苏 -->
+                <block wx:if="{{index % 5 === 3}}">
+                    <view class="mirror-frame"></view>
+                    <view class="mirror-surface"></view>
+                    <view class="mirror-glow"></view>
+                    <view class="silk-ribbon ribbon-left"></view>
+                    <view class="silk-ribbon ribbon-right"></view>
+                    <view class="ribbon-tail"></view>
+                </block>
+                
+                <!-- 类型4: 莲花露珠 -->
+                <block wx:if="{{index % 5 === 4}}">
+                    <view class="lotus-base"></view>
+                    <view class="lotus-petal lotus-petal-a"></view>
+                    <view class="lotus-petal lotus-petal-b"></view>
+                    <view class="lotus-petal lotus-petal-c"></view>
+                    <view class="lotus-center"></view>
+                    <view class="dewdrop"></view>
+                    <view class="water-ripple"></view>
+                </block>
+            </view>
+            
+            <image class="card-sticker" mode="aspectFit" src="{{item.sticker}}" wx:if="{{selectedSkin != 'princess-castle'}}"></image>
             <view class="card-content">
                 <view class="name-row">
                     <text class="wardrobe-icon">{{item.displayIcon}}</text>
@@ -69,9 +199,42 @@
             <view class="add-plus">+</view>
             <view class="add-content">
                 <text class="add-title">新建衣柜</text>
-                <text class="add-desc">给她再建一个可爱的小空间</text>
+                <text class="add-desc">{{selectedSkin == 'princess-castle' ? '添加一间新的衣橱房间' : '给她再建一个可爱的小空间'}}</text>
             </view>
+            <view class="add-gem"></view>
             <image class="add-sticker" mode="aspectFit" src="/images/home/bear-lucky.png"></image>
+        </view>
+    </view>
+    <view bindtap="closeSkinSheet" class="modal-mask" wx:if="{{showSkinSheet}}">
+        <view catchtap="noop" class="skin-sheet">
+            <view class="sheet-handle"></view>
+            <view class="skin-sheet-head">
+                <view>
+                    <text class="sheet-title">皮肤更换</text>
+                    <text class="sheet-subtitle">当前：{{selectedSkin == 'princess-castle' ? '公主城堡衣橱' : '奶油小屋'}}</text>
+                </view>
+                <view class="skin-sheet-star">
+                    <text>✦</text>
+                </view>
+            </view>
+            <view class="skin-options">
+                <view bindtap="selectSkin" class="skin-option {{selectedSkin == item.id ? 'skin-option-active' : ''}}" data-skin="{{item.id}}" wx:for="{{skinOptions}}" wx:key="id">
+                    <view class="skin-preview skin-preview-{{item.id}}">
+                        <view class="skin-preview-castle" wx:if="{{item.id == 'princess-castle'}}">
+                            <view></view>
+                            <view></view>
+                            <view></view>
+                        </view>
+                    </view>
+                    <view class="skin-option-copy">
+                        <text class="skin-option-name">{{item.name}}</text>
+                        <text class="skin-option-desc">{{item.desc}}</text>
+                    </view>
+                    <view class="skin-check">
+                        <text wx:if="{{selectedSkin == item.id}}">✓</text>
+                    </view>
+                </view>
+            </view>
         </view>
     </view>
     <view bindtap="closeSheet" class="modal-mask" wx:if="{{showActionSheet}}">

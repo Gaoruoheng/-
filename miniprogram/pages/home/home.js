@@ -24,13 +24,34 @@ const THEMES = [
   "theme-mint",
   "theme-lavender"
 ];
+const SKIN_STORAGE_KEY = "kuma_closet_home_skin";
+const DEFAULT_SKIN = "cream-house";
+const HOME_SKINS = [
+  {
+    id: DEFAULT_SKIN,
+    name: "奶油小屋",
+    desc: "原来的软萌可爱风"
+  },
+  {
+    id: "princess-castle",
+    name: "公主城堡衣橱",
+    desc: "城堡、台阶、魔法星尘"
+  }
+];
 const DEFAULT_CATEGORIES = ["上衣", "下装", "连衣裙", "鞋子", "配饰"];
+
+function normalizeSkinId(value) {
+  return HOME_SKINS.some(item => item.id === value) ? value : DEFAULT_SKIN;
+}
 
 Page({
   data: {
     wardrobes: [],
     wardrobeCount: 0,
     isEmpty: true,
+    selectedSkin: DEFAULT_SKIN,
+    skinOptions: HOME_SKINS,
+    showSkinSheet: false,
     showActionSheet: false,
     showCreateModal: false,
     selectedId: "",
@@ -48,6 +69,7 @@ Page({
 
   onShow() {
     const verifiedUser = getVerifiedUser();
+    this.loadSkinPreference();
     this.setData({
       isVerified: !!verifiedUser,
       verifiedUser,
@@ -64,6 +86,39 @@ Page({
         isEmpty: true
       });
     }
+  },
+
+  loadSkinPreference() {
+    let selectedSkin = DEFAULT_SKIN;
+    try {
+      selectedSkin = normalizeSkinId(wx.getStorageSync(SKIN_STORAGE_KEY));
+    } catch (err) {
+      console.warn("read home skin failed", err);
+    }
+    if (selectedSkin !== this.data.selectedSkin) {
+      this.setData({ selectedSkin });
+    }
+  },
+
+  openSkinSheet() {
+    this.setData({ showSkinSheet: true });
+  },
+
+  closeSkinSheet() {
+    this.setData({ showSkinSheet: false });
+  },
+
+  selectSkin(e) {
+    const selectedSkin = normalizeSkinId(e.currentTarget.dataset.skin);
+    try {
+      wx.setStorageSync(SKIN_STORAGE_KEY, selectedSkin);
+    } catch (err) {
+      console.warn("save home skin failed", err);
+    }
+    this.setData({
+      selectedSkin,
+      showSkinSheet: false
+    });
   },
 
   ensureVerified() {
