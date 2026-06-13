@@ -2492,3 +2492,40 @@ page {
   color: #999999;
   font-size: 28rpx;
 }
+
+
+.verify-quit, .verify-manage {
+    border: 3rpx solid #5b4b42;
+    border-radius: 999rpx;
+    box-shadow: 4rpx 4rpx 0 rgba(91,75,66,.12);
+    -webkit-flex-shrink: 0;
+    flex-shrink: 0;
+    font-size: 22rpx;
+    font-weight: 900;
+    padding: 10rpx 18rpx;
+    margin-right: 12rpx;
+}
+
+.verify-quit {
+    background: #ffe5e8;
+    color: #ff4d4f;
+}
+
+.verify-manage {
+    background: #d8e7ff;
+    color: #3f68a8;
+}
+
+.skin-princess-castle .verify-quit {
+    background: #ffe5e8;
+    color: #ff4d4f;
+    border-color: rgba(101,74,139,.3);
+    box-shadow: 0 4rpx 0 rgba(101,74,139,.1);
+}
+
+.skin-princess-castle .verify-manage {
+    background: rgba(216,231,255,.9);
+    color: #514099;
+    border-color: rgba(101,74,139,.3);
+    box-shadow: 0 4rpx 0 rgba(101,74,139,.1);
+}

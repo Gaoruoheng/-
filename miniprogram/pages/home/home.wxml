@@ -71,13 +71,19 @@
         </view>
     </view>
     <view class="verify-card" wx:if="{{isVerified}}">
-        <image class="verify-avatar" bindlongpress="onAdminLongPress" mode="aspectFill" src="{{verifiedUser.avatarUrl}}" wx:if="{{verifiedUser.avatarUrl}}"></image>
-        <view class="verify-avatar verify-avatar-empty" bindlongpress="onAdminLongPress" wx:else>
+        <image class="verify-avatar" mode="aspectFill" src="{{verifiedUser.avatarUrl}}" wx:if="{{verifiedUser.avatarUrl}}"></image>
+        <view class="verify-avatar verify-avatar-empty" wx:else>
             <text>✓</text>
         </view>
-        <view class="verify-info">
+        <view class="verify-info" bindtap="onAdminTapCount">
             <text class="verify-title">用户已登录</text>
             <text class="verify-name">{{verifiedUser.nickName}}</text>
+        </view>
+        <view bindtap="quitAdmin" class="verify-quit" wx:if="{{isAdminActive}}">
+            <text>管退</text>
+        </view>
+        <view bindtap="onAdminTapCount" class="verify-manage" wx:if="{{isAdminActive}}">
+            <text>管理</text>
         </view>
         <view bindtap="openJoinModal" class="verify-join">
             <text>加入共享</text>
