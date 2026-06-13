@@ -12,6 +12,7 @@ const {
   patchAfterItemDelete,
   patchAfterItemUpdate
 } = require("../../utils/wardrobeCache.js");
+const { DEFAULT_SKIN, syncPageSkin } = require("../../utils/skin.js");
 
 const DEFAULT_ITEM_NAME = "未命名单品";
 const DEFAULT_ITEM_CATEGORY = "未分类";
@@ -23,6 +24,7 @@ function normalizeText(value) {
 
 Page({
   data: {
+    selectedSkin: DEFAULT_SKIN,
     itemId: "",
     wardrobeId: "",
     item: { name: "", color: "", category: "", url: "", thumbUrl: "", notes: "" },
@@ -37,6 +39,7 @@ Page({
 
   async onLoad(options) {
     if (!requireVerifiedPage()) return;
+    syncPageSkin(this);
     this.setData({
       itemId: options.itemId || "",
       wardrobeId: options.wardrobeId || "",
@@ -50,6 +53,11 @@ Page({
     const categoriesPromise = this.loadCategories(options.wardrobeId);
     if (options.itemId) await this.fetchItem(options.itemId, { silent: hasCache });
     await categoriesPromise;
+  },
+
+  onShow() {
+    if (!requireVerifiedPage()) return;
+    syncPageSkin(this);
   },
 
   async verifyWardrobeAccess(wardrobeId) {

@@ -18,9 +18,11 @@ const {
   removeItem,
   upsertItem
 } = require("../../utils/wardrobeCache.js");
+const { DEFAULT_SKIN, syncPageSkin } = require("../../utils/skin.js");
 
 const FIRST_SCREEN_ITEM_LIMIT = 20;
-const ITEM_PAGE_SIZE = 50;
+const ON_DEMAND_PAGE_SIZE = 20;
+const ON_DEMAND_TRIGGER_REMAINING = 10;
 
 function itemOrder(item, fallbackIndex) {
   return typeof item.sort_order === "number" ? item.sort_order : 999999 + fallbackIndex;
@@ -114,6 +116,7 @@ function findMatchingCategoryIndex(cats, keyword) {
 
 Page({
   data: {
+    selectedSkin: DEFAULT_SKIN,
     wardrobeId: "",
     wardrobeName: "我的衣柜",
     allItems: [],
@@ -121,6 +124,7 @@ Page({
     groupedItems: [],
     allItemsLoaded: false,
     loadingMoreItems: false,
+    totalItems: 0,
     selectedItemIds: [],
     selectedItems: [],
     pickPackagePreview: [],
@@ -211,6 +215,7 @@ Page({
 
   onShow() {
     if (!requireVerifiedPage()) return;
+    syncPageSkin(this);
     if (this.data.wardrobeId) {
       this.fetchData({ silent: this._hasIndexCache || this.hasWardrobeContent() });
     }
@@ -298,6 +303,7 @@ Page({
       selectedUpdatedText: wardrobe.selectedUpdatedText || "",
       categoryNames: cats,
       allItems: items,
+      totalItems: typeof payload.totalItems === "number" ? payload.totalItems : this.data.totalItems,
       allItemsLoaded: options.allItemsLoaded !== false,
       loadingMoreItems: !!options.loadingMoreItems
     }, () => {
@@ -496,26 +502,6 @@ Page({
     return false;
   },
 
-  async fetchAllItems(wardrobeId, options = {}) {
-    const pageSize = options.pageSize || ITEM_PAGE_SIZE;
-    let skip = 0;
-    let items = [];
-
-    while (true) {
-      const res = await db.collection("wardrobe_items")
-        .where({ wardrobeId })
-        .skip(skip)
-        .limit(pageSize)
-        .get();
-      const pageItems = res.data || [];
-      items = items.concat(pageItems);
-      if (options.onPage) options.onPage(pageItems, items.slice());
-      if (pageItems.length < pageSize) break;
-      skip += pageSize;
-    }
-
-    return items;
-  },
 
   async fetchCategoryFirstItems(category) {
     if (!category) return [];
@@ -597,36 +583,62 @@ Page({
     });
   },
 
-  startBackgroundItemLoad(payload, fetchSeq) {
+  // ??????????? ON_DEMAND_PAGE_SIZE ????????? <= ON_DEMAND_TRIGGER_REMAINING?
+  // ?????? <= ?????????????? allItemsLoaded?????????
+  async loadNextItemPage() {
     const wardrobeId = this.data.wardrobeId;
-    this.setData({ loadingMoreItems: true, allItemsLoaded: false });
+    if (!wardrobeId || this.data.allItemsLoaded || this.data.loadingMoreItems) return;
 
-    this.fetchAllItems(wardrobeId, {
-      pageSize: ITEM_PAGE_SIZE,
-      onPage: (pageItems, loadedItems) => {
-        if (!this.isCurrentItemFetch(fetchSeq) || wardrobeId !== this.data.wardrobeId) return;
-        const mergedItems = this.mergeItems(this.data.allItems, loadedItems);
-        this.applyProgressItems(mergedItems, { allItemsLoaded: false, resetActive: false });
+    const total = this.data.totalItems || 0;
+    const loadedCount = (this.data.allItems || []).length;
+    if (total > 0 && loadedCount >= total) {
+      if (!this.data.allItemsLoaded) {
+        this.setData({ allItemsLoaded: true, loadingMoreItems: false });
       }
-    }).then(items => {
+      return;
+    }
+
+    const fetchSeq = this._itemsFetchSeq;
+    this.setData({ loadingMoreItems: true });
+
+    try {
+      const skip = loadedCount;
+      const limit = ON_DEMAND_PAGE_SIZE;
+      const res = await db.collection("wardrobe_items")
+        .where({ wardrobeId })
+        .skip(skip)
+        .limit(limit)
+        .orderBy("sort_order", "asc")
+        .get();
+      const pageItems = res.data || [];
+      const mergedItems = this.mergeItems(this.data.allItems, pageItems);
+      const newLoadedCount = mergedItems.length;
+      const reachedEnd = pageItems.length < limit || (total > 0 && newLoadedCount >= total);
+
       if (!this.isCurrentItemFetch(fetchSeq) || wardrobeId !== this.data.wardrobeId) return;
-      const fullPayload = {
-        ...payload,
-        items
-      };
-      this.applyWardrobePayload(fullPayload, {
-        resetActive: false,
-        allItemsLoaded: true,
-        loadingMoreItems: false
+
+      this.applyProgressItems(mergedItems, {
+        allItemsLoaded: reachedEnd,
+        resetActive: false
       });
-      this.cacheWardrobePayload(fullPayload);
-    }).catch(err => {
-      console.error("background item load failed", err);
+      this.setData({ loadingMoreItems: false });
+
+      if (reachedEnd) {
+        const cachedSource = {
+          wardrobe: this._wardrobeForCache || {},
+          categories: this.data.categoryNames,
+          items: mergedItems
+        };
+        this.cacheWardrobePayload(cachedSource);
+      }
+    } catch (err) {
+      console.error("on-demand item load failed", err);
       if (this.isCurrentItemFetch(fetchSeq)) {
         this.setData({ loadingMoreItems: false });
       }
-    });
+    }
   },
+
 
   async fetchData(options = {}) {
     if (!getVerifiedUser()) return;
@@ -644,12 +656,15 @@ Page({
         const initialItems = hadContent
           ? this.mergeItems(this.data.allItems, snapshotItems)
           : snapshotItems;
+        const totalItems = typeof snapshot.totalItems === "number" ? snapshot.totalItems : 0;
+        // ??????? <= ?????????????????????????
+        const allItemsLoaded = snapshot.allItemsLoaded === true || totalItems <= ON_DEMAND_PAGE_SIZE;
         const payload = {
           wardrobe: snapshot.wardrobe,
           categories: cats,
-          items: initialItems
+          items: initialItems,
+          totalItems
         };
-        const allItemsLoaded = snapshot.allItemsLoaded === true;
 
         if (!this.isCurrentItemFetch(fetchSeq)) return;
         this.applyWardrobePayload(payload, {
@@ -659,12 +674,6 @@ Page({
         });
         if (allItemsLoaded) {
           this.cacheWardrobePayload(payload);
-        } else {
-          this.startBackgroundItemLoad({
-            wardrobe: snapshot.wardrobe,
-            categories: cats,
-            items: []
-          }, fetchSeq);
         }
         return;
       }
@@ -689,9 +698,8 @@ Page({
         this.applyWardrobePayload(payload, {
           resetActive: false,
           allItemsLoaded: false,
-          loadingMoreItems: true
+          loadingMoreItems: false
         });
-        this.startBackgroundItemLoad(payload, fetchSeq);
         return;
       }
 
@@ -704,9 +712,8 @@ Page({
       this.applyWardrobePayload(priorityPayload, {
         resetActive: !options.silent,
         allItemsLoaded: false,
-        loadingMoreItems: true
+        loadingMoreItems: false
       });
-      this.startBackgroundItemLoad(payload, fetchSeq);
     } catch (err) {
       console.error(err);
       if (err && err.code === "FORBIDDEN") {
@@ -847,10 +854,17 @@ Page({
       this.scheduleSectionMeasure();
     });
   },
-
+
   onItemListScroll(e) {
-    const scrollTop = Number(e.detail.scrollTop) || 0;
+    const detail = e.detail || {};
+    const scrollTop = Number(detail.scrollTop) || 0;
+    const scrollHeight = Number(detail.scrollHeight) || 0;
     this._lastRightScrollTop = scrollTop;
+
+    // ??????????????? 10 ??????????
+    if (this.maybeTriggerOnDemandLoad(scrollHeight, scrollTop)) {
+      this.loadNextItemPage();
+    }
 
     if (typeof this._lockedActiveCat === "number") {
       if (this.data.activeCat !== this._lockedActiveCat) {
@@ -883,6 +897,29 @@ Page({
         sideScrollIntoView: "side-cat-" + nextActive
       });
     }
+  },
+
+  // ????????????????
+  maybeTriggerOnDemandLoad(scrollHeight, scrollTop) {
+    if (this.data.allItemsLoaded || this.data.loadingMoreItems) return false;
+    if (!this.data.wardrobeId) return false;
+
+    const total = this.data.totalItems || 0;
+    const loadedCount = (this.data.allItems || []).length;
+    if (total > 0 && loadedCount >= total) return false;
+
+    if (scrollHeight > 0) {
+      const clientHeight = this._itemListClientHeight || 0;
+      const approxItemHeight = 120;
+      const distanceToBottom = scrollHeight - scrollTop - clientHeight;
+      return distanceToBottom <= approxItemHeight * ON_DEMAND_TRIGGER_REMAINING;
+    }
+
+    // ???? scrollHeight ???????
+    if (total > 0) {
+      return total - loadedCount <= ON_DEMAND_TRIGGER_REMAINING;
+    }
+    return false;
   },
 
   scheduleSectionMeasure() {

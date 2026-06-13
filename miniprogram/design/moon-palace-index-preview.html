@@ -1,0 +1,674 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>月宫玉兔衣阁预览</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 14% 12%, rgba(255, 238, 178, .28), transparent 250px),
+    radial-gradient(circle at 88% 10%, rgba(216, 205, 255, .34), transparent 280px),
+    linear-gradient(135deg, #f7f0ff 0%, #fffaf1 48%, #fdf6ff 100%);
+  color: #463057;
+  font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+}
+.stage {
+  display: grid;
+  gap: 28px;
+  grid-template-columns: minmax(320px, 420px) minmax(260px, 340px);
+  align-items: center;
+  padding: 28px;
+}
+.phone {
+  width: min(390px, calc(100vw - 36px));
+  height: 780px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(196, 158, 86, .28);
+  border-radius: 34px;
+  background:
+    radial-gradient(circle at 10% 18%, rgba(255, 248, 232, .78), transparent 88px),
+    radial-gradient(circle at 88% 10%, rgba(230, 222, 255, .44), transparent 100px),
+    linear-gradient(180deg, rgba(253, 249, 255, .98), rgba(255, 251, 246, .98));
+  box-shadow: 0 28px 70px rgba(70, 48, 87, .2);
+}
+.header {
+  height: 160px;
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,.32) 0 1px, transparent 1px 22px),
+    radial-gradient(circle at 75% 32%, rgba(255, 238, 178, .46), transparent 30%),
+    linear-gradient(135deg, rgba(255,248,252,.94), rgba(246,236,255,.72) 52%, rgba(255,247,230,.8));
+  border-bottom: 1px solid rgba(196, 158, 86, .16);
+}
+.moon {
+  width: 68px;
+  height: 68px;
+  position: absolute;
+  right: 48px;
+  top: 30px;
+  border-radius: 50%;
+  border: 1px solid rgba(196, 158, 86, .28);
+  background: radial-gradient(circle at 34% 30%, #fff 0%, #fff9df 50%, rgba(238, 204, 120, .7) 100%);
+  box-shadow: 0 0 36px rgba(255, 231, 160, .52);
+}
+.moon::before, .moon::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(196, 158, 86, .14);
+}
+.moon::before { width: 10px; height: 10px; right: 16px; top: 16px; }
+.moon::after { width: 7px; height: 7px; left: 20px; bottom: 16px; }
+.silk {
+  width: 28px;
+  height: 150px;
+  position: absolute;
+  top: 0;
+  border-radius: 999px 999px 18px 18px;
+  background: linear-gradient(180deg, rgba(255,255,255,.8), rgba(216, 201, 234, .32));
+}
+.silk.left { left: 30px; transform: rotate(8deg); }
+.silk.right { right: 24px; transform: rotate(-8deg); }
+.window {
+  width: 96px;
+  height: 118px;
+  position: absolute;
+  left: 147px;
+  top: 28px;
+  border: 1px solid rgba(255, 232, 166, .48);
+  border-radius: 54px 54px 15px 15px;
+  background: linear-gradient(180deg, rgba(98,70,128,.76), rgba(115,82,132,.42));
+  box-shadow: 0 15px 28px rgba(82, 62, 111, .18), inset 0 0 0 2px rgba(255,255,255,.12);
+}
+.window span {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  height: 2px;
+  background: rgba(255, 232, 166, .58);
+}
+.window span:nth-child(1) { top: 38px; }
+.window span:nth-child(2) { top: 66px; }
+.window span:nth-child(3) { top: 92px; }
+.window::after {
+  content: "";
+  position: absolute;
+  width: 2px;
+  top: 18px;
+  bottom: 16px;
+  left: 50%;
+  background: rgba(255, 232, 166, .54);
+}
+.cloud {
+  position: absolute;
+  height: 22px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255,255,255,.82), rgba(236,229,255,.56));
+  border: 1px solid rgba(211,188,235,.2);
+}
+.cloud.a { left: 45px; top: 92px; width: 108px; }
+.cloud.b { right: 24px; top: 112px; width: 94px; }
+.top-card {
+  margin: -26px 14px 0;
+  min-height: 126px;
+  position: relative;
+  z-index: 4;
+  border: 1px solid rgba(196, 158, 86, .24);
+  border-radius: 22px;
+  padding: 18px 16px 12px;
+  background: linear-gradient(120deg, rgba(255,255,255,.9), rgba(250,245,255,.72));
+  box-shadow: 0 10px 24px rgba(82,62,111,.1), inset 0 0 0 1px rgba(255,255,255,.56);
+}
+.top-card h1 {
+  margin: 0;
+  font-size: 22px;
+  letter-spacing: 0;
+  color: #463057;
+}
+.top-card p {
+  margin: 8px 0 16px;
+  color: #837091;
+  font-size: 13px;
+}
+.tabs {
+  display: flex;
+  gap: 8px;
+  border-top: 1px solid rgba(196, 158, 86, .16);
+  padding-top: 12px;
+}
+.tabs span {
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.6);
+  color: #7c638d;
+  font-weight: 800;
+  font-size: 12px;
+}
+.tabs span:first-child {
+  background: linear-gradient(180deg, #fffdf2, #f1d78b);
+  color: #5a3b6f;
+}
+.content {
+  height: 494px;
+  display: flex;
+  padding-top: 10px;
+}
+.side {
+  width: 75px;
+  padding: 4px 4px 0 8px;
+  background:
+    radial-gradient(circle at 52% 4%, rgba(255,238,178,.28), transparent 62px),
+    linear-gradient(180deg, rgba(255,255,255,.5), rgba(247,241,255,.42));
+  border-right: 1px solid rgba(213,185,128,.2);
+}
+.side-item {
+  height: 56px;
+  margin-bottom: 6px;
+  padding: 5px 4px 6px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  border: 1px solid rgba(214,184,117,.22);
+  border-radius: 18px 18px 13px 13px;
+  background:
+    radial-gradient(circle at 50% 26%, rgba(255,249,224,.52), transparent 30px),
+    linear-gradient(180deg, rgba(255,255,255,.84), rgba(249,244,255,.62));
+  box-shadow: 0 4px 9px rgba(86,67,116,.06), inset 0 0 0 1px rgba(255,255,255,.62);
+}
+.side-item.active {
+  background:
+    radial-gradient(circle at 50% 28%, rgba(255,242,188,.82), transparent 34px),
+    linear-gradient(180deg, rgba(255,255,255,.96), rgba(246,239,255,.78));
+  border-color: rgba(214,184,117,.42);
+}
+.small-moon {
+  width: 25px;
+  height: 25px;
+  margin: 0 auto -3px;
+  position: relative;
+  border-radius: 50%;
+  border: 1px solid rgba(196,158,86,.26);
+  background: radial-gradient(circle at 32% 28%, #fff, #fffce6 44%, #f4e1a5 100%);
+  box-shadow: 0 0 12px rgba(255,233,166,.36);
+  animation: moonFloat 4.8s ease-in-out infinite;
+}
+.side-item:nth-child(2n) .small-moon { animation-delay: -.9s; }
+.side-item:nth-child(3n) .small-moon { animation-delay: -1.7s; }
+.small-moon::before {
+  content: "";
+  position: absolute;
+  left: -5px;
+  bottom: 3px;
+  width: 24px;
+  height: 7px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255,255,255,.9), rgba(236,229,255,.58));
+}
+.rank {
+  display: inline-block;
+  min-width: 20px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.76);
+  border: 1px solid rgba(214,184,117,.34);
+  color: #9b7636;
+  font-size: 9px;
+  font-weight: 900;
+  line-height: 14px;
+}
+.side-name {
+  display: block;
+  color: #60486f;
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.list {
+  flex: 1;
+  padding: 0 8px;
+}
+.cat-title {
+  height: 28px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 6px 0 8px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255,255,255,.88), rgba(250,245,255,.64));
+  border: 1px solid rgba(214,184,117,.24);
+  color: #513869;
+  font-weight: 900;
+  font-size: 13px;
+}
+.jade-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 28%, #fff, #f9eefb 48%, #c8b4da 76%, #c49f54 100%);
+  box-shadow: 0 0 0 4px rgba(236,226,255,.22);
+}
+.cloth {
+  min-height: 72px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  padding: 8px;
+  border-radius: 17px;
+  border: 1px solid rgba(214,184,117,.24);
+  background:
+    radial-gradient(circle at 88% 52%, rgba(255,247,221,.5), transparent 48px),
+    linear-gradient(120deg, rgba(255,255,255,.9), rgba(250,246,255,.66) 54%, rgba(255,251,244,.78));
+  box-shadow: 0 5px 12px rgba(82,62,111,.08), inset 0 0 0 1px rgba(255,255,255,.58);
+}
+.watermark {
+  position: absolute;
+  right: 46px;
+  top: 16px;
+  width: 46px;
+  height: 46px;
+  opacity: .44;
+  border-radius: 50%;
+  border: 1px solid rgba(196,158,86,.18);
+  background: radial-gradient(circle at 35% 30%, rgba(255,255,255,.64), rgba(255,238,178,.18) 48%, transparent 70%);
+}
+.cloth:nth-child(3n) .watermark {
+  width: 34px;
+  border-radius: 23px 23px 50% 50%;
+  background: linear-gradient(180deg, rgba(231,222,255,.36), transparent);
+  transform: rotate(-12deg);
+}
+.cloth:nth-child(3n + 1) .watermark {
+  width: 20px;
+  height: 52px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(196,158,86,.24), transparent);
+  transform: rotate(14deg);
+}
+.num {
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  margin-right: 7px;
+  position: relative;
+  z-index: 2;
+  border: 1px solid rgba(214,184,117,.34);
+  border-radius: 8px;
+  background: rgba(255,255,255,.76);
+  color: #8f6b32;
+  font-size: 10px;
+  font-weight: 900;
+}
+.thumb {
+  width: 54px;
+  height: 54px;
+  margin-right: 9px;
+  position: relative;
+  z-index: 2;
+  border-radius: 14px;
+  border: 1px solid rgba(214,184,117,.28);
+  background:
+    radial-gradient(circle at 32% 28%, rgba(255,255,255,.75), transparent 30%),
+    linear-gradient(135deg, #e8d9ff, #fff2d6);
+  box-shadow: 0 4px 8px rgba(82,62,111,.08), inset 0 0 0 3px rgba(255,255,255,.52);
+}
+.info {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  z-index: 2;
+}
+.name {
+  display: block;
+  color: #48305f;
+  font-size: 14px;
+  font-weight: 900;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sub {
+  display: block;
+  color: #867495;
+  font-size: 11px;
+  margin-top: 4px;
+}
+.pick {
+  width: 34px;
+  height: 34px;
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.78);
+  background:
+    radial-gradient(circle at 34% 28%, #fff9df, #f4d98b 54%, #c89a46 100%);
+  box-shadow:
+    0 5px 11px rgba(110,77,33,.15),
+    inset 0 0 0 3px rgba(255,255,255,.26),
+    inset 0 0 0 7px rgba(143,94,33,.08),
+    inset 0 0 0 10px rgba(255,255,255,.14);
+  color: #6f4b22;
+  font-weight: 900;
+  overflow: hidden;
+}
+.pick::before, .pick::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid rgba(126,83,33,.2);
+}
+.pick::before {
+  width: 24px;
+  height: 24px;
+  left: 5px;
+  top: 5px;
+  box-shadow: inset 0 0 0 3px rgba(255,255,255,.13);
+}
+.pick::after {
+  width: 8px;
+  height: 8px;
+  left: 13px;
+  top: 13px;
+  box-shadow:
+    -7px 0 0 -2px rgba(255,255,255,.48),
+    7px 0 0 -2px rgba(255,255,255,.42),
+    0 -7px 0 -2px rgba(255,255,255,.44),
+    0 7px 0 -2px rgba(255,255,255,.38);
+}
+.pick span {
+  width: 16px;
+  height: 16px;
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: radial-gradient(circle at 36% 30%, rgba(255,255,255,.44), rgba(255,244,190,.24));
+  border: 1px solid rgba(126,83,33,.18);
+  line-height: 1;
+}
+.pick.ok {
+  background: radial-gradient(circle at 35% 28%, #fff, #d8c2ec 54%, #6b4a87 100%);
+  color: #fffdf2;
+}
+.rabbit-fab {
+  position: absolute;
+  right: 8px;
+  bottom: 18px;
+  width: 92px;
+  height: 92px;
+  animation: rabbitFloat 4.2s ease-in-out infinite;
+}
+.rabbit-moon-glow {
+  width: 86px;
+  height: 86px;
+  position: absolute;
+  left: 4px;
+  top: 7px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,231,135,.48), transparent 70%);
+}
+.rabbit-moon {
+  width: 66px;
+  height: 66px;
+  position: absolute;
+  left: 13px;
+  top: 16px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.82);
+  background: radial-gradient(circle at 31% 25%, #fffdf4, #ffe993 56%, #d8ad49 100%);
+  box-shadow: 0 10px 20px rgba(130,88,36,.18), inset -6px -8px 14px rgba(155,99,24,.12);
+}
+.rabbit-moon::before, .rabbit-moon::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(185,140,54,.13);
+}
+.rabbit-moon::before { width: 8px; height: 8px; right: 16px; top: 16px; }
+.rabbit-moon::after { width: 5px; height: 5px; left: 20px; bottom: 18px; }
+.rabbit-body {
+  width: 48px;
+  height: 35px;
+  position: absolute;
+  left: 22px;
+  top: 11px;
+  z-index: 4;
+  border: 1px solid rgba(196,158,86,.24);
+  border-radius: 27px 31px 24px 23px;
+  background: linear-gradient(180deg, #fff, #fffdf7 56%, #f0e4f5);
+  box-shadow: 0 5px 10px rgba(82,62,111,.09), inset 0 0 0 2px rgba(255,255,255,.46);
+  transform: rotate(-11deg);
+}
+.rabbit-body::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  left: -7px;
+  top: 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(196,158,86,.18);
+  background: #fff;
+}
+.rabbit-head {
+  width: 28px;
+  height: 27px;
+  position: absolute;
+  left: 55px;
+  top: 20px;
+  z-index: 5;
+  border: 1px solid rgba(196,158,86,.22);
+  border-radius: 48% 48% 46% 46%;
+  background: linear-gradient(180deg, #fff, #fffdf7 62%, #f3e9f6);
+  transform: rotate(10deg);
+}
+.rabbit-head::before, .rabbit-head::after {
+  content: "";
+  width: 6px;
+  height: 5px;
+  position: absolute;
+  top: 10px;
+  border-bottom: 1.6px solid rgba(75,53,99,.68);
+  border-radius: 0 0 999px 999px;
+}
+.rabbit-head::before { left: 7px; }
+.rabbit-head::after { right: 7px; }
+.rabbit-ear {
+  width: 10px;
+  height: 28px;
+  position: absolute;
+  top: 4px;
+  z-index: 3;
+  border-radius: 999px;
+  border: 1px solid rgba(196,158,86,.2);
+  background: linear-gradient(180deg, #fff, #fffdf6 60%, #efe1f5);
+}
+.rabbit-ear.left { left: 62px; transform: rotate(18deg); }
+.rabbit-ear.right { left: 71px; transform: rotate(42deg); }
+.rabbit-sleep {
+  position: absolute;
+  right: 2px;
+  top: 2px;
+  color: rgba(92,71,116,.5);
+  font-size: 14px;
+  font-weight: 900;
+}
+.rabbit-plus {
+  width: 28px;
+  height: 28px;
+  position: absolute;
+  right: 0;
+  top: 58px;
+  display: grid;
+  place-items: center;
+  z-index: 5;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.72);
+  background: radial-gradient(circle at 34% 28%, #fffef2, #f3d98c 62%, #bd9650 100%);
+  color: #5d3f6d;
+  font-size: 22px;
+  font-weight: 900;
+  line-height: 1;
+}
+.rabbit-cloud {
+  width: 48px;
+  height: 16px;
+  position: absolute;
+  left: 0;
+  bottom: 16px;
+  z-index: 6;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255,255,255,.9), rgba(236,229,255,.64));
+  border: 1px solid rgba(214,184,117,.18);
+}
+.rabbit-cloud.right {
+  left: auto;
+  right: 18px;
+  bottom: 14px;
+  width: 54px;
+}
+.notes {
+  max-width: 330px;
+  padding: 24px;
+  border-radius: 26px;
+  border: 1px solid rgba(196, 158, 86, .2);
+  background: rgba(255,255,255,.54);
+  box-shadow: 0 18px 45px rgba(70, 48, 87, .12);
+}
+.notes h2 {
+  margin: 0 0 12px;
+  font-size: 24px;
+  color: #463057;
+}
+.notes p {
+  margin: 0;
+  line-height: 1.8;
+  color: #6f5d7c;
+  font-size: 14px;
+}
+.palette {
+  display: flex;
+  gap: 8px;
+  margin-top: 18px;
+}
+.palette span {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.78);
+}
+.palette span:nth-child(1) { background: #fffdf6; }
+.palette span:nth-child(2) { background: #f2e8ff; }
+.palette span:nth-child(3) { background: #ead083; }
+.palette span:nth-child(4) { background: #6b4a87; }
+.palette span:nth-child(5) { background: #d8c2ec; }
+@keyframes moonFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+@keyframes rabbitFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+@media (max-width: 760px) {
+  .stage { grid-template-columns: 1fr; padding: 18px; }
+  .notes { display: none; }
+}
+</style>
+</head>
+<body>
+  <main class="stage">
+    <section class="phone" aria-label="月宫玉兔衣阁小程序页面预览">
+      <header class="header">
+        <div class="silk left"></div>
+        <div class="silk right"></div>
+        <div class="moon"></div>
+        <div class="window"><span></span><span></span><span></span></div>
+        <div class="cloud a"></div>
+        <div class="cloud b"></div>
+      </header>
+
+      <section class="top-card">
+        <h1>月宫玉兔衣阁</h1>
+        <p>在月色、云纹和玉色光泽里整理今日穿搭。</p>
+        <div class="tabs"><span>衣柜 28</span><span>计划</span><span>任务 2</span><span>搜索</span></div>
+      </section>
+
+      <section class="content">
+        <aside class="side">
+          <div class="side-item active"><div class="small-moon"></div><span class="rank">1</span><span class="side-name">礼服</span></div>
+          <div class="side-item"><div class="small-moon"></div><span class="rank">2</span><span class="side-name">外套</span></div>
+          <div class="side-item"><div class="small-moon"></div><span class="rank">3</span><span class="side-name">珠饰</span></div>
+          <div class="side-item"><div class="small-moon"></div><span class="rank">4</span><span class="side-name">香云</span></div>
+          <div class="side-item"><div class="small-moon"></div><span class="rank">5</span><span class="side-name">鞋履</span></div>
+        </aside>
+
+        <section class="list">
+          <div class="cat-title"><span class="jade-dot"></span><span>1. 礼服</span><span style="color:#947da7">(8)</span></div>
+          <article class="cloth">
+            <div class="watermark"></div>
+            <span class="num">1</span><div class="thumb"></div>
+            <div class="info"><span class="name">月白缎面连衣裙</span><span class="sub">珍珠白 / 适合晚宴</span></div>
+            <div class="pick"><span>+</span></div>
+          </article>
+          <article class="cloth">
+            <div class="watermark"></div>
+            <span class="num">2</span><div class="thumb"></div>
+            <div class="info"><span class="name">紫玉云肩外搭</span><span class="sub">浅紫 / 已收纳</span></div>
+            <div class="pick ok"><span>✓</span></div>
+          </article>
+          <article class="cloth">
+            <div class="watermark"></div>
+            <span class="num">3</span><div class="thumb"></div>
+            <div class="info"><span class="name">金线绣花披肩</span><span class="sub">月金 / 今天备选</span></div>
+            <div class="pick"><span>+</span></div>
+          </article>
+          <article class="cloth">
+            <div class="watermark"></div>
+            <span class="num">4</span><div class="thumb"></div>
+            <div class="info"><span class="name">玉兔云纹手袋</span><span class="sub">淡金 / 配饰</span></div>
+            <div class="pick"><span>+</span></div>
+          </article>
+        </section>
+      </section>
+
+      <button class="rabbit-fab" aria-label="添加衣服">
+        <span class="rabbit-moon-glow"></span>
+        <span class="rabbit-moon"></span>
+        <span class="rabbit-body"></span>
+        <span class="rabbit-head"></span>
+        <span class="rabbit-ear left"></span>
+        <span class="rabbit-ear right"></span>
+        <span class="rabbit-sleep">Z</span>
+        <span class="rabbit-plus">+</span>
+        <span class="rabbit-cloud"></span>
+        <span class="rabbit-cloud right"></span>
+      </button>
+    </section>
+
+    <aside class="notes">
+      <h2>方向：月宫玉兔衣阁</h2>
+      <p>左侧分类改成会轻微浮动的月相签牌，颜色更浅、更仙；右侧衣服条加入半透明月纹和云纹水印；新增按钮变成玉兔加号，不再是奶油小屋的可爱圆按钮。</p>
+      <div class="palette"><span></span><span></span><span></span><span></span><span></span></div>
+    </aside>
+  </main>
+</body>
+</html>

@@ -1,7 +1,14 @@
+const { DEFAULT_SKIN, syncPageSkin } = require("../../utils/skin.js");
+
 Page({
   data: {
+    selectedSkin: DEFAULT_SKIN,
     categories: ['Tops', 'Bottoms', 'Dresses', 'Accessories'],
     newCat: ''
+  },
+
+  onShow() {
+    syncPageSkin(this);
   },
   
   onInput(e) {

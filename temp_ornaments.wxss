@@ -1,0 +1,480 @@
+﻿/* ========================================
+   梦境感横条效果
+   ======================================== */
+
+.skin-princess-castle .dream-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 8rpx;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.skin-princess-castle .dream-shimmer {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 229, 139, 0.3) 25%,
+        rgba(216, 231, 255, 0.4) 50%,
+        rgba(255, 214, 231, 0.3) 75%,
+        transparent 100%
+    );
+    animation: shimmer-slide 4s ease-in-out infinite;
+}
+
+@keyframes shimmer-slide {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(50%); }
+}
+
+.skin-princess-castle .dream-glow {
+    position: absolute;
+    top: -2rpx;
+    left: 0;
+    right: 0;
+    height: 12rpx;
+    background: radial-gradient(
+        ellipse at center,
+        rgba(255, 229, 139, 0.2) 0%,
+        transparent 70%
+    );
+    opacity: 0.6;
+    animation: glow-pulse 3s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
+}
+
+.skin-princess-castle .dream-particle {
+    position: absolute;
+    top: -4rpx;
+    font-size: 16rpx;
+    color: rgba(255, 229, 139, 0.7);
+    opacity: 0;
+    animation: particle-float 5s ease-in-out infinite;
+}
+
+.skin-princess-castle .dream-particle.particle-1 {
+    left: 15%;
+    animation-delay: 0s;
+}
+
+.skin-princess-castle .dream-particle.particle-2 {
+    left: 50%;
+    animation-delay: 1.5s;
+}
+
+.skin-princess-castle .dream-particle.particle-3 {
+    left: 85%;
+    animation-delay: 3s;
+}
+
+@keyframes particle-float {
+    0%, 100% { 
+        opacity: 0; 
+        transform: translateY(0) scale(0.5);
+    }
+    25% { 
+        opacity: 0.8; 
+        transform: translateY(-6rpx) scale(1);
+    }
+    50% { 
+        opacity: 0.6; 
+        transform: translateY(-8rpx) scale(0.9);
+    }
+    75% { 
+        opacity: 0.3; 
+        transform: translateY(-6rpx) scale(0.7);
+    }
+}
+
+/* ========================================
+   装饰元素通用样式
+   ======================================== */
+
+.skin-princess-castle .room-ornament {
+    position: absolute;
+    left: 22rpx;
+    top: 42rpx;
+    width: 92rpx;
+    height: 92rpx;
+    z-index: 5;
+}
+
+/* ========================================
+   类型0: 紫藤月窗 (保持原有样式)
+   ======================================== */
+
+.skin-princess-castle .ornament-type-0 .moon-ring {
+    position: absolute;
+    width: 92rpx;
+    height: 92rpx;
+    border-radius: 50%;
+    border: 3rpx solid rgba(184, 138, 51, 0.4);
+    background: radial-gradient(
+        circle at 35% 35%,
+        rgba(255, 252, 239, 0.85) 0%,
+        rgba(255, 244, 222, 0.65) 100%
+    );
+    box-shadow: inset 0 0 0 1rpx rgba(255, 255, 255, 0.5),
+                0 8rpx 16rpx rgba(81, 64, 153, 0.12);
+}
+
+.skin-princess-castle .ornament-type-0 .wisteria-branch {
+    position: absolute;
+    left: 15rpx;
+    top: 21rpx;
+    width: 62rpx;
+    height: 3rpx;
+    background: linear-gradient(90deg, #5f3d79, #b88a33);
+    border-radius: 999rpx;
+    transform: rotate(-13deg);
+}
+
+.skin-princess-castle .ornament-type-0 .wisteria-petal {
+    position: absolute;
+    width: 11rpx;
+    height: 20rpx;
+    background: linear-gradient(180deg, #f7e7ff, #a66ed0 70%, #7f4bad);
+    border-radius: 999rpx 999rpx 999rpx 12rpx;
+    box-shadow: 7rpx 9rpx 0 rgba(207, 169, 232, 0.64),
+                14rpx 2rpx 0 rgba(150, 98, 197, 0.5);
+    transform: rotate(22deg);
+}
+
+.skin-princess-castle .ornament-type-0 .petal-one { left: 18rpx; top: 27rpx; }
+.skin-princess-castle .ornament-type-0 .petal-two { left: 32rpx; top: 34rpx; transform: rotate(-8deg); }
+.skin-princess-castle .ornament-type-0 .petal-three { left: 49rpx; top: 28rpx; transform: rotate(14deg); }
+.skin-princess-castle .ornament-type-0 .petal-four { left: 64rpx; top: 36rpx; transform: rotate(-16deg); }
+.skin-princess-castle .ornament-type-0 .petal-five { left: 38rpx; top: 52rpx; width: 9rpx; height: 16rpx; transform: rotate(18deg); }
+.skin-princess-castle .ornament-type-0 .petal-six { left: 57rpx; top: 54rpx; width: 9rpx; height: 15rpx; transform: rotate(-10deg); }
+
+.skin-princess-castle .ornament-type-0 .gold-tassel {
+    position: absolute;
+    left: 48rpx;
+    bottom: 12rpx;
+    width: 2rpx;
+    height: 30rpx;
+    background: linear-gradient(180deg, #c99635, #fff1b2);
+    border-radius: 999rpx;
+    box-shadow: -8rpx 9rpx 0 rgba(201, 150, 53, 0.72),
+                8rpx 9rpx 0 rgba(201, 150, 53, 0.72),
+                0 28rpx 0 rgba(255, 241, 178, 0.65);
+}
+
+/* ========================================
+   类型1: 祥云金铃
+   ======================================== */
+
+.skin-princess-castle .ornament-type-1 .cloud-layer {
+    position: absolute;
+    background: linear-gradient(135deg, #e8d4f8, #d4b8e8);
+    border-radius: 999rpx;
+    box-shadow: inset 0 0 0 1rpx rgba(255, 255, 255, 0.6);
+}
+
+.skin-princess-castle .ornament-type-1 .cloud-back {
+    left: 8rpx;
+    top: 18rpx;
+    width: 58rpx;
+    height: 32rpx;
+    opacity: 0.7;
+}
+
+.skin-princess-castle .ornament-type-1 .cloud-mid {
+    left: 18rpx;
+    top: 12rpx;
+    width: 52rpx;
+    height: 36rpx;
+    background: linear-gradient(135deg, #f0e4fa, #dcc8ee);
+}
+
+.skin-princess-castle .ornament-type-1 .cloud-front {
+    left: 26rpx;
+    top: 16rpx;
+    width: 48rpx;
+    height: 30rpx;
+    background: linear-gradient(135deg, #f7edff, #e4d0f5);
+}
+
+.skin-princess-castle .ornament-type-1 .golden-bell {
+    position: absolute;
+    left: 40rpx;
+    top: 46rpx;
+    width: 20rpx;
+    height: 24rpx;
+    background: linear-gradient(180deg, #ffe58b, #c99635);
+    border-radius: 50% 50% 50% 50% / 45% 45% 55% 55%;
+    box-shadow: inset 0 -2rpx 4rpx rgba(201, 150, 53, 0.5),
+                0 4rpx 8rpx rgba(201, 150, 53, 0.3);
+}
+
+.skin-princess-castle .ornament-type-1 .bell-tassel {
+    position: absolute;
+    left: 48rpx;
+    top: 70rpx;
+    width: 2rpx;
+    height: 18rpx;
+    background: linear-gradient(180deg, #c99635, #fff1b2);
+    border-radius: 999rpx;
+}
+
+/* ========================================
+   类型2: 蝴蝶梅花
+   ======================================== */
+
+.skin-princess-castle .ornament-type-2 .plum-branch {
+    position: absolute;
+    left: 12rpx;
+    top: 28rpx;
+    width: 68rpx;
+    height: 4rpx;
+    background: linear-gradient(90deg, #6b4a68, #8b6a88);
+    border-radius: 999rpx;
+    transform: rotate(-18deg);
+}
+
+.skin-princess-castle .ornament-type-2 .plum-blossom {
+    position: absolute;
+    width: 16rpx;
+    height: 16rpx;
+    background: radial-gradient(circle, #ffd6e7 0%, #ffb4d4 60%, #e89cc5 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 0 2rpx rgba(255, 255, 255, 0.6),
+                0 4rpx 8rpx rgba(232, 156, 197, 0.4);
+}
+
+.skin-princess-castle .ornament-type-2 .blossom-one {
+    left: 18rpx;
+    top: 24rpx;
+}
+
+.skin-princess-castle .ornament-type-2 .blossom-two {
+    left: 40rpx;
+    top: 18rpx;
+}
+
+.skin-princess-castle .ornament-type-2 .blossom-three {
+    left: 62rpx;
+    top: 14rpx;
+}
+
+.skin-princess-castle .ornament-type-2 .butterfly {
+    position: absolute;
+    left: 32rpx;
+    top: 48rpx;
+    width: 28rpx;
+    height: 22rpx;
+}
+
+.skin-princess-castle .ornament-type-2 .wing {
+    position: absolute;
+    width: 14rpx;
+    height: 18rpx;
+    background: radial-gradient(
+        ellipse at 30% 40%,
+        rgba(255, 255, 255, 0.9) 0%,
+        #d8b4e8 40%,
+        #a87cc8 100%
+    );
+    border-radius: 80% 20% 60% 40% / 60% 40% 80% 20%;
+    box-shadow: inset 0 0 0 1rpx rgba(168, 124, 200, 0.3);
+}
+
+.skin-princess-castle .ornament-type-2 .wing-left {
+    left: 0;
+    top: 2rpx;
+    transform: rotate(-15deg);
+}
+
+.skin-princess-castle .ornament-type-2 .wing-right {
+    right: 0;
+    top: 2rpx;
+    transform: rotate(15deg) scaleX(-1);
+}
+
+.skin-princess-castle .ornament-type-2 .butterfly-body {
+    position: absolute;
+    left: 12rpx;
+    top: 6rpx;
+    width: 4rpx;
+    height: 14rpx;
+    background: linear-gradient(180deg, #6b4a68, #4a3348);
+    border-radius: 999rpx;
+}
+
+/* ========================================
+   类型3: 宝镜流苏
+   ======================================== */
+
+.skin-princess-castle .ornament-type-3 .mirror-frame {
+    position: absolute;
+    left: 18rpx;
+    top: 16rpx;
+    width: 56rpx;
+    height: 56rpx;
+    border-radius: 50%;
+    border: 4rpx solid #ffe58b;
+    background: linear-gradient(135deg, #fff7ce, #f0e4b8);
+    box-shadow: inset 0 0 0 2rpx rgba(255, 255, 255, 0.7),
+                0 8rpx 16rpx rgba(201, 150, 53, 0.25);
+}
+
+.skin-princess-castle .ornament-type-3 .mirror-surface {
+    position: absolute;
+    left: 24rpx;
+    top: 22rpx;
+    width: 44rpx;
+    height: 44rpx;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle at 35% 35%,
+        rgba(255, 255, 255, 0.95) 0%,
+        rgba(216, 231, 255, 0.6) 50%,
+        rgba(168, 196, 232, 0.4) 100%
+    );
+    box-shadow: inset 0 0 8rpx rgba(216, 231, 255, 0.5);
+}
+
+.skin-princess-castle .ornament-type-3 .mirror-glow {
+    position: absolute;
+    left: 28rpx;
+    top: 26rpx;
+    width: 18rpx;
+    height: 18rpx;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.8) 0%,
+        transparent 70%
+    );
+}
+
+.skin-princess-castle .ornament-type-3 .silk-ribbon {
+    position: absolute;
+    width: 6rpx;
+    height: 32rpx;
+    background: linear-gradient(180deg, #ffd6e7, #e8b4d4);
+    border-radius: 999rpx;
+    box-shadow: 0 0 0 1rpx rgba(255, 255, 255, 0.4);
+}
+
+.skin-princess-castle .ornament-type-3 .ribbon-left {
+    left: 14rpx;
+    top: 68rpx;
+    transform: rotate(-12deg);
+}
+
+.skin-princess-castle .ornament-type-3 .ribbon-right {
+    right: 14rpx;
+    top: 68rpx;
+    transform: rotate(12deg);
+}
+
+.skin-princess-castle .ornament-type-3 .ribbon-tail {
+    position: absolute;
+    left: 44rpx;
+    top: 86rpx;
+    width: 8rpx;
+    height: 8rpx;
+    background: linear-gradient(135deg, #ffd6e7, #e8b4d4);
+    border-radius: 50%;
+    box-shadow: 0 2rpx 4rpx rgba(232, 180, 212, 0.4);
+}
+
+/* ========================================
+   类型4: 莲花露珠
+   ======================================== */
+
+.skin-princess-castle .ornament-type-4 .lotus-base {
+    position: absolute;
+    left: 32rpx;
+    top: 52rpx;
+    width: 28rpx;
+    height: 12rpx;
+    background: linear-gradient(180deg, #a8d4b8, #7ab498);
+    border-radius: 50%;
+    opacity: 0.7;
+}
+
+.skin-princess-castle .ornament-type-4 .lotus-petal {
+    position: absolute;
+    width: 22rpx;
+    height: 28rpx;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.95) 0%,
+        #ffd6e7 50%,
+        #e8b4d4 100%
+    );
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    box-shadow: inset 0 0 0 1rpx rgba(255, 255, 255, 0.6),
+                0 4rpx 8rpx rgba(232, 180, 212, 0.3);
+}
+
+.skin-princess-castle .ornament-type-4 .lotus-petal-a {
+    left: 35rpx;
+    top: 24rpx;
+}
+
+.skin-princess-castle .ornament-type-4 .lotus-petal-b {
+    left: 22rpx;
+    top: 32rpx;
+    transform: rotate(-25deg);
+}
+
+.skin-princess-castle .ornament-type-4 .lotus-petal-c {
+    left: 48rpx;
+    top: 32rpx;
+    transform: rotate(25deg);
+}
+
+.skin-princess-castle .ornament-type-4 .lotus-center {
+    position: absolute;
+    left: 40rpx;
+    top: 38rpx;
+    width: 12rpx;
+    height: 12rpx;
+    background: radial-gradient(circle, #ffe58b, #f0d46b);
+    border-radius: 50%;
+    box-shadow: 0 0 0 2rpx rgba(255, 255, 255, 0.5),
+                inset 0 0 4rpx rgba(201, 150, 53, 0.4);
+}
+
+.skin-princess-castle .ornament-type-4 .dewdrop {
+    position: absolute;
+    left: 52rpx;
+    top: 30rpx;
+    width: 10rpx;
+    height: 12rpx;
+    background: radial-gradient(
+        circle at 30% 30%,
+        rgba(255, 255, 255, 0.95) 0%,
+        rgba(216, 231, 255, 0.85) 60%,
+        rgba(168, 196, 232, 0.7) 100%
+    );
+    border-radius: 50% 50% 50% 70% / 60% 60% 70% 40%;
+    box-shadow: inset 0 -2rpx 3rpx rgba(168, 196, 232, 0.4),
+                0 2rpx 4rpx rgba(168, 196, 232, 0.3);
+}
+
+.skin-princess-castle .ornament-type-4 .water-ripple {
+    position: absolute;
+    left: 26rpx;
+    top: 58rpx;
+    width: 40rpx;
+    height: 8rpx;
+    border-radius: 50%;
+    border: 1rpx solid rgba(168, 196, 232, 0.3);
+    opacity: 0.5;
+}

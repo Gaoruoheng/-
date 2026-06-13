@@ -19,6 +19,7 @@ const {
   removeItem,
   upsertItem
 } = require("../../utils/wardrobeCache.js");
+const { DEFAULT_SKIN, syncPageSkin } = require("../../utils/skin.js");
 
 const PAGE_SIZE = 50;
 
@@ -38,6 +39,7 @@ function itemOrder(item, fallbackIndex) {
 
 Page({
   data: {
+    selectedSkin: DEFAULT_SKIN,
     categoryName: "",
     wardrobeId: "",
     items: [],
@@ -63,6 +65,7 @@ Page({
 
   onLoad(options) {
     if (!requireVerifiedPage()) return;
+    syncPageSkin(this);
     const categoryName = decodeURIComponent(options.name || "");
     const wardrobeId = options.wardrobeId || "";
 
@@ -73,6 +76,7 @@ Page({
 
   onShow() {
     if (!requireVerifiedPage()) return;
+    syncPageSkin(this);
     if (this.data.categoryName && this.data.wardrobeId) {
       this.fetchItems({ silent: this._hasItemsCache || this.data.items.length > 0 });
     }

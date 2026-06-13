@@ -12,6 +12,7 @@ const {
   patchAfterItemCreate,
   patchCategoryNamesCache
 } = require("../../utils/wardrobeCache.js");
+const { DEFAULT_SKIN, syncPageSkin } = require("../../utils/skin.js");
 
 const DEFAULT_CATEGORIES = ["上衣", "下装", "连衣裙", "鞋子", "配饰"];
 const UNCATEGORIZED_CATEGORY = "未分类";
@@ -25,6 +26,7 @@ function normalizeName(value) {
 
 Page({
   data: {
+    selectedSkin: DEFAULT_SKIN,
     wardrobeId: "",
     itemUrl: "",
     name: "",
@@ -39,6 +41,7 @@ Page({
 
   async onLoad(options) {
     if (!requireVerifiedPage()) return;
+    syncPageSkin(this);
     const wardrobeId = options.wardrobeId || "";
     const defaultCategory = decodeURIComponent(options.category || "");
     this.setData({ wardrobeId, defaultCategory });
@@ -46,6 +49,11 @@ Page({
     const ok = await this.verifyWardrobeAccess(wardrobeId);
     if (!ok) return;
     this.loadCategories(wardrobeId);
+  },
+
+  onShow() {
+    if (!requireVerifiedPage()) return;
+    syncPageSkin(this);
   },
 
   getWardrobeCacheId() {

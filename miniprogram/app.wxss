@@ -96,3 +96,166 @@ button:active {
   background: var(--accent-color);
   color: #FFF;
 }
+
+.skin-princess-castle {
+  background:
+    radial-gradient(circle at 12% 8%, rgba(255, 214, 231, 0.72) 0, rgba(255, 214, 231, 0) 190rpx),
+    radial-gradient(circle at 90% 18%, rgba(216, 231, 255, 0.72) 0, rgba(216, 231, 255, 0) 180rpx),
+    linear-gradient(180deg, #fff8fc 0%, #f8f0ff 48%, #fff7ec 100%);
+  color: #4a3348;
+}
+
+.skin-princess-castle .kawaii-card,
+.skin-princess-castle .section,
+.skin-princess-castle .form-section,
+.skin-princess-castle .form-box,
+.skin-princess-castle .category-box,
+.skin-princess-castle .profile-card,
+.skin-princess-castle .share-code-card,
+.skin-princess-castle .add-cat-box {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(255, 248, 252, 0.78));
+  border: 2rpx solid rgba(184, 138, 51, 0.24);
+  border-radius: 28rpx;
+  box-shadow: 0 12rpx 26rpx rgba(81, 64, 153, 0.08), inset 0 0 0 2rpx rgba(255, 255, 255, 0.72);
+}
+
+.skin-princess-castle .top-row,
+.skin-princess-castle .top-nav,
+.skin-princess-castle .top-header {
+  background: linear-gradient(180deg, rgba(255, 248, 252, 0.95), rgba(255, 248, 252, 0.58));
+  border-bottom: 2rpx solid rgba(207, 169, 232, 0.3);
+  box-shadow: 0 8rpx 18rpx rgba(81, 64, 153, 0.06);
+}
+
+.skin-princess-castle .header-gradient,
+.skin-princess-castle .hero-card {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.38) 0 2rpx, transparent 2rpx 34rpx),
+    radial-gradient(circle at 82% 28%, rgba(255, 229, 139, 0.42), transparent 36%),
+    linear-gradient(135deg, #fffaff, #ffe4f1 45%, #dfeaff 100%);
+  border: 2rpx solid rgba(184, 138, 51, 0.26);
+  border-radius: 34rpx;
+  box-shadow: 0 14rpx 26rpx rgba(81, 64, 153, 0.12), inset 0 0 0 2rpx rgba(255, 255, 255, 0.72);
+}
+
+.skin-princess-castle .header-character,
+.skin-princess-castle .soft-cloud,
+.skin-princess-castle .bg-orb,
+.skin-princess-castle .bg-star,
+.skin-princess-castle .hero-sticker,
+.skin-princess-castle .upload-sticker {
+  display: none;
+}
+
+.skin-princess-castle .title-text,
+.skin-princess-castle .nav-title,
+.skin-princess-castle .section-title,
+.skin-princess-castle .closet-title,
+.skin-princess-castle .cloth-name,
+.skin-princess-castle .cat-name,
+.skin-princess-castle .field-label,
+.skin-princess-castle .label {
+  color: #5d4279;
+  text-shadow: 0 2rpx 0 #fff, 0 4rpx 10rpx rgba(207, 169, 232, 0.35);
+}
+
+.skin-princess-castle .title-sub,
+.skin-princess-castle .section-tip,
+.skin-princess-castle .closet-subtitle,
+.skin-princess-castle .notice-text,
+.skin-princess-castle .cloth-color,
+.skin-princess-castle .empty-text,
+.skin-princess-castle .upload-sub {
+  color: #8a7499;
+}
+
+.skin-princess-castle .eyebrow,
+.skin-princess-castle .top-label,
+.skin-princess-castle .tiny-label,
+.skin-princess-castle .nav-count,
+.skin-princess-castle .cloth-cat,
+.skin-princess-castle .rank-badge {
+  background: linear-gradient(135deg, #fffdf3, #fff2c9);
+  border: 2rpx solid rgba(184, 138, 51, 0.32);
+  border-radius: 999rpx;
+  color: #9a6b2d;
+  box-shadow: 0 5rpx 12rpx rgba(184, 138, 51, 0.14);
+}
+
+.skin-princess-castle .tab-item,
+.skin-princess-castle .category-chip,
+.skin-princess-castle .filter-chip,
+.skin-princess-castle .share-action,
+.skin-princess-castle .add-cat-toggle {
+  background: rgba(255, 255, 255, 0.76);
+  border: 2rpx solid rgba(207, 169, 232, 0.36);
+  color: #765d88;
+  box-shadow: 0 6rpx 14rpx rgba(81, 64, 153, 0.06);
+}
+
+.skin-princess-castle .tab-item.active,
+.skin-princess-castle .category-chip.active,
+.skin-princess-castle .filter-chip.active,
+.skin-princess-castle .save-action,
+.skin-princess-castle .save-top-btn,
+.skin-princess-castle .confirm-btn,
+.skin-princess-castle .add-cat-btn,
+.skin-princess-castle .add-btn {
+  background: linear-gradient(135deg, #ffd6e7, #a66ed0);
+  border: 2rpx solid rgba(255, 255, 255, 0.82);
+  color: #fff;
+  box-shadow: 0 8rpx 16rpx rgba(166, 110, 208, 0.22), inset 0 0 0 2rpx rgba(255, 255, 255, 0.28);
+}
+
+.skin-princess-castle .field-input,
+.skin-princess-castle .field-picker,
+.skin-princess-castle .field-textarea,
+.skin-princess-castle .kawaii-input,
+.skin-princess-castle .cat-input,
+.skin-princess-castle .new-category-input,
+.skin-princess-castle .search-input-wrap {
+  background: rgba(255, 255, 255, 0.82);
+  border: 2rpx solid rgba(207, 169, 232, 0.38);
+  border-radius: 22rpx;
+  box-shadow: inset 0 0 0 2rpx rgba(255, 255, 255, 0.58);
+  color: #4a3348;
+}
+
+.skin-princess-castle .upload-box,
+.skin-princess-castle .img-section {
+  background:
+    radial-gradient(circle at 72% 28%, rgba(255, 229, 139, 0.38), transparent 34%),
+    linear-gradient(135deg, rgba(255, 214, 231, 0.72), rgba(216, 231, 255, 0.72));
+  border: 2rpx solid rgba(184, 138, 51, 0.22);
+  border-radius: 32rpx;
+  box-shadow: 0 14rpx 28rpx rgba(81, 64, 153, 0.11);
+}
+
+.skin-princess-castle .cloth-row,
+.skin-princess-castle .cat-item {
+  background: linear-gradient(110deg, rgba(255, 255, 255, 0.9), rgba(255, 248, 252, 0.76));
+  border: 2rpx solid rgba(207, 169, 232, 0.28);
+  box-shadow: 0 9rpx 18rpx rgba(81, 64, 153, 0.07);
+}
+
+.skin-princess-castle .cloth-img-box,
+.skin-princess-castle .shared-avatar {
+  border: 2rpx solid rgba(184, 138, 51, 0.28);
+  box-shadow: 0 8rpx 16rpx rgba(81, 64, 153, 0.1);
+}
+
+.skin-princess-castle .bottom-actions {
+  background: rgba(255, 248, 252, 0.94);
+  border-top: 2rpx solid rgba(207, 169, 232, 0.3);
+}
+
+.skin-princess-castle .kawaii-back-icon {
+  background: #fffafc;
+  border: 2rpx solid rgba(184, 138, 51, 0.32);
+  box-shadow: 0 6rpx 14rpx rgba(81, 64, 153, 0.1);
+}
+
+.skin-princess-castle .kawaii-back-stroke {
+  border-left-color: #5d4279;
+  border-bottom-color: #5d4279;
+}

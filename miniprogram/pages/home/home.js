@@ -8,6 +8,12 @@ const {
   registerOrLoginUser
 } = require("../../utils/auth.js");
 const { getCache, setCache, removeCache } = require("../../utils/pageCache.js");
+const {
+  DEFAULT_SKIN,
+  SKIN_OPTIONS,
+  getSelectedSkin,
+  setSelectedSkin
+} = require("../../utils/skin.js");
 
 const STICKERS = [
   "/images/home/bear-wave.png",
@@ -24,25 +30,7 @@ const THEMES = [
   "theme-mint",
   "theme-lavender"
 ];
-const SKIN_STORAGE_KEY = "kuma_closet_home_skin";
-const DEFAULT_SKIN = "cream-house";
-const HOME_SKINS = [
-  {
-    id: DEFAULT_SKIN,
-    name: "奶油小屋",
-    desc: "原来的软萌可爱风"
-  },
-  {
-    id: "princess-castle",
-    name: "公主城堡衣橱",
-    desc: "城堡、台阶、魔法星尘"
-  }
-];
 const DEFAULT_CATEGORIES = ["上衣", "下装", "连衣裙", "鞋子", "配饰"];
-
-function normalizeSkinId(value) {
-  return HOME_SKINS.some(item => item.id === value) ? value : DEFAULT_SKIN;
-}
 
 Page({
   data: {
@@ -50,7 +38,7 @@ Page({
     wardrobeCount: 0,
     isEmpty: true,
     selectedSkin: DEFAULT_SKIN,
-    skinOptions: HOME_SKINS,
+    skinOptions: SKIN_OPTIONS,
     showSkinSheet: false,
     showActionSheet: false,
     showCreateModal: false,
@@ -89,12 +77,7 @@ Page({
   },
 
   loadSkinPreference() {
-    let selectedSkin = DEFAULT_SKIN;
-    try {
-      selectedSkin = normalizeSkinId(wx.getStorageSync(SKIN_STORAGE_KEY));
-    } catch (err) {
-      console.warn("read home skin failed", err);
-    }
+    const selectedSkin = getSelectedSkin();
     if (selectedSkin !== this.data.selectedSkin) {
       this.setData({ selectedSkin });
     }
@@ -109,12 +92,7 @@ Page({
   },
 
   selectSkin(e) {
-    const selectedSkin = normalizeSkinId(e.currentTarget.dataset.skin);
-    try {
-      wx.setStorageSync(SKIN_STORAGE_KEY, selectedSkin);
-    } catch (err) {
-      console.warn("save home skin failed", err);
-    }
+    const selectedSkin = setSelectedSkin(e.currentTarget.dataset.skin);
     this.setData({
       selectedSkin,
       showSkinSheet: false

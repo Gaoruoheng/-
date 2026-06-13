@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>月宫入衣台 Add 预览</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 14% 12%, rgba(218, 206, 255, .48), transparent 28%),
+    radial-gradient(circle at 84% 18%, rgba(255, 232, 163, .38), transparent 24%),
+    linear-gradient(145deg, #efe8fb, #fff8fb 52%, #edf6ff);
+  color: #49335f;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.stage {
+  width: min(100vw, 920px);
+  padding: 28px;
+  display: grid;
+  grid-template-columns: 390px minmax(260px, 1fr);
+  gap: 28px;
+  align-items: center;
+}
+.phone {
+  width: 390px;
+  height: 844px;
+  position: relative;
+  overflow: hidden;
+  border: 10px solid rgba(56, 40, 76, .88);
+  border-radius: 42px;
+  background: #fff8fb;
+  box-shadow: 0 32px 80px rgba(70, 49, 97, .22);
+}
+.phone.moon {
+  background:
+    radial-gradient(circle at 14% 9%, rgba(222, 214, 255, .72) 0, transparent 112px),
+    radial-gradient(circle at 92% 18%, rgba(255, 234, 172, .48) 0, transparent 110px),
+    linear-gradient(180deg, #f8f3ff 0%, #fff9fb 46%, #f3f8ff 100%);
+}
+.phone.cream {
+  background: linear-gradient(180deg, #fff8fb 0%, #fffdf9 44%, #f7fff6 100%);
+}
+.top-row {
+  height: 66px;
+  padding: 30px 13px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 3;
+}
+.back {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 28%, #fffdf6, #f8e4ff 56%, #d8c2ec);
+  border: 1px solid rgba(169, 128, 190, .28);
+  box-shadow: 0 4px 9px rgba(83, 62, 111, .11), inset 0 0 0 2px rgba(255,255,255,.5);
+  position: relative;
+}
+.back::before {
+  content: "";
+  width: 11px;
+  height: 11px;
+  border-left: 3px solid #513a70;
+  border-bottom: 3px solid #513a70;
+  position: absolute;
+  left: 15px;
+  top: 13px;
+  transform: rotate(45deg);
+}
+.top-label {
+  height: 28px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
+}
+.moon .top-label {
+  color: #735b8e;
+  background: rgba(255,255,255,.72);
+  border: 1px solid rgba(159,126,177,.24);
+  box-shadow: 0 4px 10px rgba(82,62,111,.08), inset 0 0 0 1px rgba(255,255,255,.52);
+}
+.cream .back {
+  background: #fffdf9;
+  border: 2px solid #5c4b51;
+  box-shadow: 2px 2px 0 #ffb7c5;
+}
+.cream .top-label {
+  color: #5c4b51;
+  background: #fff;
+  border: 2px solid #5c4b51;
+  box-shadow: 2px 2px 0 #a8d8ea;
+}
+.scroll {
+  height: calc(100% - 66px);
+  overflow: auto;
+  padding: 4px 13px 118px;
+}
+.bg-moon, .bg-cloud { position: absolute; pointer-events: none; }
+.bg-moon {
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 28%, rgba(255,255,252,.95), rgba(255,236,161,.5) 48%, transparent 72%);
+}
+.bg-moon.one { width: 95px; height: 95px; right: -26px; top: 56px; opacity: .64; }
+.bg-moon.two { width: 64px; height: 64px; left: -21px; top: 260px; opacity: .34; }
+.bg-cloud {
+  height: 19px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255,255,255,.86), rgba(225,216,250,.34));
+  box-shadow: 0 5px 12px rgba(87,65,116,.07);
+}
+.bg-cloud.one { width: 130px; left: -39px; top: 115px; }
+.bg-cloud.two { width: 115px; right: -41px; top: 380px; }
+.cream .bg-moon, .cream .bg-cloud { display: none; }
+.hero {
+  min-height: 89px;
+  margin: 4px 0 10px;
+  padding: 12px 95px 12px 12px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 13px;
+}
+.moon .hero {
+  border: 1px solid rgba(168,133,184,.26);
+  background:
+    linear-gradient(110deg, rgba(255,255,255,.82), rgba(249,239,255,.58) 52%, rgba(231,239,255,.58)),
+    linear-gradient(180deg, rgba(255,255,255,.64), rgba(255,255,255,.2));
+  box-shadow: 0 7px 15px rgba(82,62,111,.10), inset 0 0 0 1px rgba(255,255,255,.54);
+}
+.cream .hero {
+  background: #ffe6ef;
+  border: 2px solid #5c4b51;
+  border-radius: 18px;
+  box-shadow: 3px 3px 0 #5c4b51;
+}
+.eyebrow {
+  display: inline-flex;
+  margin-bottom: 5px;
+  padding: 4px 7px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 900;
+}
+.moon .eyebrow {
+  color: #8a6330;
+  background: linear-gradient(135deg, rgba(255,254,245,.92), rgba(246,224,165,.72));
+  border: 1px solid rgba(181,137,62,.28);
+}
+.cream .eyebrow {
+  color: #e76f7a;
+  background: #fff;
+  border: 2px solid #5c4b51;
+}
+.title {
+  display: block;
+  color: #4f3970;
+  font-size: 19px;
+  line-height: 1.14;
+  font-weight: 900;
+}
+.sub {
+  display: block;
+  margin-top: 4px;
+  color: #7c6990;
+  font-size: 11px;
+}
+.cream .title { color: #5c4b51; }
+.cream .sub { display: none; }
+.hero-window {
+  position: absolute;
+  right: 12px;
+  top: 8px;
+  width: 76px;
+  height: 71px;
+  border-radius: 38px 38px 21px 21px;
+  border: 1px solid rgba(155,119,173,.26);
+  background: linear-gradient(180deg, rgba(255,255,255,.66), rgba(230,220,250,.38));
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.34), 0 4px 9px rgba(86,64,114,.08);
+  overflow: hidden;
+}
+.moon-disc {
+  position: absolute;
+  left: 13px;
+  top: 13px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 33% 25%, #fffef3, #ffe995 58%, #d6ad4b);
+  box-shadow: inset -4px -5px 9px rgba(143,91,22,.12), 0 4px 9px rgba(134,94,35,.13);
+}
+.rabbit-body {
+  position: absolute;
+  left: 22px;
+  top: 21px;
+  width: 32px;
+  height: 22px;
+  border-radius: 22px 24px 17px 18px;
+  background: linear-gradient(180deg, #fff, #fffdf8 60%, #f1e7f5);
+  border: 1px solid rgba(178,143,84,.22);
+  transform: rotate(-11deg);
+  z-index: 3;
+}
+.rabbit-body::before {
+  content: "";
+  position: absolute;
+  left: -4px;
+  top: 10px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid rgba(178,143,84,.18);
+}
+.rabbit-head {
+  position: absolute;
+  left: 44px;
+  top: 25px;
+  width: 17px;
+  height: 16px;
+  border-radius: 48%;
+  background: linear-gradient(180deg, #fff, #fffdf7 62%, #f3e9f6);
+  border: 1px solid rgba(178,143,84,.2);
+  transform: rotate(10deg);
+  z-index: 4;
+}
+.rabbit-ear {
+  position: absolute;
+  top: 14px;
+  width: 6px;
+  height: 17px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #fff, #fffdf7 60%, #efe2f5);
+  border: 1px solid rgba(178,143,84,.18);
+  z-index: 2;
+}
+.rabbit-ear.left { left: 46px; transform: rotate(18deg); }
+.rabbit-ear.right { left: 52px; transform: rotate(42deg); }
+.window-cloud {
+  position: absolute;
+  bottom: 7px;
+  height: 11px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255,255,255,.92), rgba(229,223,255,.64));
+  z-index: 5;
+}
+.window-cloud.a { left: 3px; width: 39px; }
+.window-cloud.b { right: 2px; width: 36px; }
+.cream .hero-window { display: none; }
+.upload {
+  height: 172px;
+  margin-bottom: 11px;
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 13px;
+}
+.moon .upload {
+  border: 1px solid rgba(160,124,178,.26);
+  background:
+    radial-gradient(circle at 50% 43%, rgba(255,242,184,.58), transparent 42%),
+    linear-gradient(135deg, rgba(255,255,255,.82), rgba(239,231,255,.58) 58%, rgba(226,239,255,.52));
+  box-shadow: 0 7px 15px rgba(82,62,111,.10), inset 0 0 0 1px rgba(255,255,255,.52);
+}
+.moon .upload::before {
+  content: "";
+  position: absolute;
+  inset: 12px 14px;
+  border: 1px solid rgba(176,141,73,.18);
+  border-radius: 65px 65px 18px 18px;
+}
+.cream .upload {
+  background: #fff1d8;
+  border: 2px solid #5c4b51;
+  border-radius: 18px;
+  box-shadow: 3px 3px 0 #5c4b51;
+}
+.symbol {
+  width: 95px;
+  height: 77px;
+  position: relative;
+  margin-bottom: 6px;
+}
+.jade-ring {
+  position: absolute;
+  left: 9px;
+  top: 3px;
+  width: 77px;
+  height: 68px;
+  border-radius: 39px 39px 18px 18px;
+  border: 1px solid rgba(137,184,172,.42);
+  background: linear-gradient(180deg, rgba(255,255,255,.44), rgba(220,242,238,.22));
+  box-shadow: inset 0 0 0 3px rgba(255,255,255,.36);
+}
+.symbol .moon-disc { left: 24px; top: 12px; width: 48px; height: 48px; }
+.symbol .rabbit-body { left: 30px; top: 22px; width: 35px; height: 24px; }
+.symbol .rabbit-head { left: 54px; top: 28px; }
+.symbol .rabbit-ear.left { left: 56px; top: 18px; }
+.symbol .rabbit-ear.right { left: 62px; top: 18px; }
+.silk-cloud {
+  position: absolute;
+  bottom: 10px;
+  height: 11px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.88);
+  z-index: 6;
+}
+.silk-cloud.one { left: 7px; width: 44px; }
+.silk-cloud.two { right: 3px; width: 46px; }
+.upload-hint {
+  font-size: 14px;
+  font-weight: 900;
+}
+.moon .upload-hint { color: #4f3970; }
+.cream .upload-hint { color: #5c4b51; }
+.upload-sub {
+  margin-top: 4px;
+  font-size: 11px;
+}
+.moon .upload-sub { color: #7b698b; }
+.cream .upload-sub { color: #8c7b82; }
+.upload-badge {
+  position: absolute;
+  right: 11px;
+  bottom: 10px;
+  height: 29px;
+  padding: 0 9px 0 6px;
+  display: flex;
+  align-items: center;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 900;
+}
+.moon .upload-badge {
+  color: #76502c;
+  background: rgba(255,253,246,.9);
+  border: 1px solid rgba(181,137,62,.28);
+  box-shadow: 0 4px 9px rgba(110,77,33,.10), inset 0 0 0 1px rgba(255,255,255,.48);
+}
+.cream .upload-badge {
+  color: #5c4b51;
+  background: #fff;
+  border: 2px solid #5c4b51;
+  box-shadow: 2px 2px 0 #ffb7c5;
+}
+.mooncake {
+  width: 17px;
+  height: 17px;
+  margin-right: 4px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 28%, #fffaf0, #f0cf76 58%, #bd8f42);
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.24);
+}
+.cream .mooncake { display: none; }
+.panel {
+  margin-bottom: 11px;
+  padding: 12px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+}
+.moon .panel {
+  border: 1px solid rgba(160,124,178,.24);
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.80), rgba(247,239,255,.58)),
+    linear-gradient(180deg, rgba(236,251,246,.18), rgba(255,255,255,.12));
+  box-shadow: 0 6px 13px rgba(82,62,111,.08), inset 0 0 0 1px rgba(255,255,255,.5);
+}
+.cream .panel {
+  background: #fff;
+  border: 2px solid #5c4b51;
+  border-radius: 18px;
+  box-shadow: 3px 3px 0 #5c4b51;
+}
+.watermark {
+  position: absolute;
+  right: 11px;
+  top: 9px;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  border: 1px solid rgba(181,137,62,.14);
+  background: radial-gradient(circle at 35% 30%, rgba(255,255,255,.44), rgba(255,231,151,.14) 45%, transparent 70%);
+  opacity: .7;
+}
+.cream .watermark { display: none; }
+.section-title {
+  position: relative;
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 900;
+  z-index: 1;
+}
+.moon .section-title { color: #513a70; }
+.cream .section-title { color: #5c4b51; }
+.field { position: relative; z-index: 1; margin-bottom: 11px; }
+.field:last-child { margin-bottom: 0; }
+.label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 12px;
+  font-weight: 900;
+}
+.moon .label { color: #645078; }
+.cream .label { color: #5c4b51; }
+.input {
+  height: 39px;
+  display: flex;
+  align-items: center;
+  padding: 0 11px;
+  border-radius: 10px;
+  font-size: 13px;
+}
+.moon .input {
+  color: #8b7a9a;
+  background: rgba(255,255,255,.76);
+  border: 1px solid rgba(137,184,172,.36);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.52), 0 3px 7px rgba(82,62,111,.04);
+}
+.cream .input {
+  color: #8c7b82;
+  background: #fffdf9;
+  border: 2px solid #5c4b51;
+  border-radius: 14px;
+}
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 10px;
+}
+.add-cat {
+  height: 26px;
+  min-width: 54px;
+  padding: 0 9px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 900;
+}
+.moon .add-cat {
+  color: #78522e;
+  background: linear-gradient(135deg, rgba(255,254,244,.9), rgba(240,211,132,.72));
+  border: 1px solid rgba(181,137,62,.28);
+  box-shadow: 0 3px 7px rgba(120,83,30,.10);
+}
+.cream .add-cat {
+  color: #5c4b51;
+  background: #e2f0cb;
+  border: 2px solid #5c4b51;
+  box-shadow: 2px 2px 0 #5c4b51;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+.chip {
+  min-height: 30px;
+  margin: 0 7px 7px 0;
+  padding: 0 9px;
+  display: flex;
+  align-items: center;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
+  position: relative;
+  overflow: hidden;
+}
+.moon .chip {
+  color: #614c78;
+  background: rgba(255,255,255,.72);
+  border: 1px solid rgba(159,126,177,.24);
+  box-shadow: 0 3px 7px rgba(82,62,111,.05), inset 0 0 0 1px rgba(255,255,255,.34);
+}
+.moon .chip.active {
+  color: #fffdf8;
+  background: linear-gradient(135deg, #73539a, #9c7ac0 58%, #d5c0ed);
+}
+.cream .chip {
+  color: #5c4b51;
+  background: #fffdf9;
+  border: 2px solid #5c4b51;
+  box-shadow: 2px 2px 0 #ffd1ba;
+}
+.cream .chip.active {
+  color: #fff;
+  background: #ffb7c5;
+}
+.dot {
+  width: 9px;
+  height: 9px;
+  margin-right: 5px;
+  border-radius: 50%;
+}
+.moon .dot {
+  border: 1px solid rgba(181,137,62,.28);
+  background: radial-gradient(circle at 34% 28%, #fffef5, #f0d77f 64%, #c89a46);
+}
+.cream .dot {
+  background: #a8d8ea;
+  border: 2px solid #5c4b51;
+}
+.save {
+  height: 46px;
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 900;
+}
+.phone > .save {
+  position: absolute;
+  left: 13px;
+  right: 13px;
+  bottom: 18px;
+  z-index: 20;
+}
+.moon .save {
+  color: #fffdf7;
+  background: linear-gradient(135deg, #604383, #8d68b3 56%, #d7bcea);
+  border: 1px solid rgba(255,255,255,.76);
+  box-shadow: 0 7px 13px rgba(82,62,111,.18), inset 0 0 0 1px rgba(255,255,255,.22);
+}
+.cream .save {
+  color: #5c4b51;
+  background: #f0a07c;
+  border: 2px solid #5c4b51;
+  box-shadow: 3px 3px 0 #5c4b51;
+}
+.save-seal {
+  position: absolute;
+  left: 11px;
+  top: 9px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 28%, #fffaf0, #f0cf76 58%, #bd8f42);
+}
+.cream .save-seal { display: none; }
+.notes h1 {
+  margin: 0 0 12px;
+  color: #4b3563;
+  font-size: 30px;
+  line-height: 1.05;
+}
+.notes p {
+  margin: 0 0 18px;
+  color: #6e5d7f;
+  font-size: 15px;
+  line-height: 1.7;
+  max-width: 36em;
+}
+.switcher {
+  display: inline-flex;
+  padding: 5px;
+  gap: 5px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.62);
+  border: 1px solid rgba(116,86,150,.16);
+  box-shadow: 0 10px 28px rgba(82,62,111,.08);
+}
+.switcher button {
+  height: 36px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #6e5d7f;
+  font-weight: 800;
+  cursor: pointer;
+}
+.switcher button.active {
+  background: #604383;
+  color: #fffdf7;
+}
+@media (max-width: 760px) {
+  .stage { grid-template-columns: 1fr; padding: 14px; }
+  .phone { width: min(390px, calc(100vw - 28px)); height: 820px; margin: auto; }
+}
+</style>
+</head>
+<body>
+  <main class="stage">
+    <section class="phone moon" id="phone" aria-label="添加衣服页面预览">
+      <div class="bg-moon one"></div>
+      <div class="bg-moon two"></div>
+      <div class="bg-cloud one"></div>
+      <div class="bg-cloud two"></div>
+      <div class="top-row">
+        <div class="back"></div>
+        <div class="top-label">新增衣服</div>
+      </div>
+      <div class="scroll">
+        <section class="hero">
+          <div class="hero-window">
+            <div class="moon-disc"></div>
+            <div class="rabbit-body"></div>
+            <div class="rabbit-head"></div>
+            <div class="rabbit-ear left"></div>
+            <div class="rabbit-ear right"></div>
+            <div class="window-cloud a"></div>
+            <div class="window-cloud b"></div>
+          </div>
+          <span class="eyebrow" data-moon="Moon Palace" data-cream="Kuma Closet">Moon Palace</span>
+          <span class="title" data-moon="月宫入衣台" data-cream="给衣柜添一件小可爱">月宫入衣台</span>
+          <span class="sub">把今日新衣收入云纹衣阁</span>
+        </section>
+
+        <section class="upload">
+          <div class="symbol">
+            <div class="jade-ring"></div>
+            <div class="moon-disc"></div>
+            <div class="rabbit-body"></div>
+            <div class="rabbit-head"></div>
+            <div class="rabbit-ear left"></div>
+            <div class="rabbit-ear right"></div>
+            <div class="silk-cloud one"></div>
+            <div class="silk-cloud two"></div>
+          </div>
+          <div class="upload-hint" data-moon="轻点月窗，收入今日新衣" data-cream="点击选择衣服照片">轻点月窗，收入今日新衣</div>
+          <div class="upload-sub" data-moon="可先留空，月宫会暂放默认衣影" data-cream="可选，没传照片会用默认图">可先留空，月宫会暂放默认衣影</div>
+          <div class="upload-badge"><div class="mooncake"></div><span>添加照片</span></div>
+        </section>
+
+        <section class="panel">
+          <div class="watermark"></div>
+          <span class="section-title" data-moon="衣影小札" data-cream="衣服信息">衣影小札</span>
+          <div class="field">
+            <span class="label">名称（可选）</span>
+            <div class="input">例如：月白缎面连衣裙</div>
+          </div>
+          <div class="field">
+            <span class="label">颜色 / 备注（可选）</span>
+            <div class="input">例如：月白、银线云纹</div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="watermark"></div>
+          <div class="panel-head">
+            <span class="section-title" data-moon="收进哪一阁" data-cream="选择分类">收进哪一阁</span>
+            <div class="add-cat" data-moon="+ 月签" data-cream="+ 分类">+ 月签</div>
+          </div>
+          <div class="chips">
+            <div class="chip active"><span class="dot"></span>上衣</div>
+            <div class="chip"><span class="dot"></span>下装</div>
+            <div class="chip"><span class="dot"></span>连衣裙</div>
+            <div class="chip"><span class="dot"></span>鞋子</div>
+            <div class="chip"><span class="dot"></span>配饰</div>
+          </div>
+        </section>
+
+      </div>
+      <section class="save"><div class="save-seal"></div><span>保存到衣柜</span></section>
+    </section>
+
+    <aside class="notes">
+      <h1>主题联动后的 Add 页面</h1>
+      <p>新主题走月宫、玉色、圆月饼和云纹签牌。奶油小屋仍保留原本的可爱粗描边节奏，Home 切换主题后这个页面才跟着变。</p>
+      <div class="switcher">
+        <button class="active" data-theme="moon">月宫主题</button>
+        <button data-theme="cream">奶油小屋</button>
+      </div>
+    </aside>
+  </main>
+
+<script>
+const phone = document.getElementById("phone");
+const buttons = document.querySelectorAll(".switcher button");
+function setTheme(theme) {
+  const isMoon = theme === "moon";
+  phone.className = "phone " + (isMoon ? "moon" : "cream");
+  document.querySelectorAll("[data-moon]").forEach(node => {
+    node.textContent = isMoon ? node.dataset.moon : node.dataset.cream;
+  });
+  buttons.forEach(button => button.classList.toggle("active", button.dataset.theme === theme));
+}
+buttons.forEach(button => button.addEventListener("click", () => setTheme(button.dataset.theme)));
+</script>
+</body>
+</html>

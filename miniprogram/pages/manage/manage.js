@@ -8,6 +8,7 @@ const {
 } = require("../../utils/auth.js");
 const { getCache, setCache, removeCache } = require("../../utils/pageCache.js");
 const { backToWardrobe } = require("../../utils/navigation.js");
+const { DEFAULT_SKIN, syncPageSkin } = require("../../utils/skin.js");
 
 const DEFAULT_CATEGORIES = ["上衣", "下装", "连衣裙", "鞋子", "配饰"];
 const MANAGE_CACHE_MAX_AGE = 1000 * 60 * 30;
@@ -21,6 +22,7 @@ function catClass(isDragging, isOver) {
 
 Page({
   data: {
+    selectedSkin: DEFAULT_SKIN,
     wardrobeId: "",
     wardrobeName: "",
     wardrobeDesc: "",
@@ -51,10 +53,16 @@ Page({
 
   onLoad(options) {
     if (!requireVerifiedPage()) return;
+    syncPageSkin(this);
     const wardrobeId = options.wardrobeId || "";
     this.setData({ wardrobeId });
     const hasCache = wardrobeId ? this.hydrateManageCache() : false;
     if (wardrobeId) this.fetchData(wardrobeId, { silent: hasCache });
+  },
+
+  onShow() {
+    if (!requireVerifiedPage()) return;
+    syncPageSkin(this);
   },
 
   getManageCacheId() {

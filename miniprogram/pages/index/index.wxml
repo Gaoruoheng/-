@@ -1,17 +1,35 @@
-<view class="app-container">
+<view class="app-container skin-{{selectedSkin}}">
     <view class="bg-orb orb-1"></view>
     <view class="bg-orb orb-2"></view>
     <view class="bg-star star-1"></view>
     <view class="bg-star star-2"></view>
     <view class="top-header">
         <view class="header-gradient">
-            <image class="header-bg-image" mode="aspectFill" src="{{headerBg}}" wx:if="{{headerBg}}"></image>
-            <view class="soft-cloud cloud-1" wx:if="{{!headerBg}}"></view>
-            <view class="soft-cloud cloud-2" wx:if="{{!headerBg}}"></view>
-            <view class="header-asset-layer" wx:if="{{!headerBg&&headerImages.length>0}}">
+            <view class="castle-header-art" wx:if="{{selectedSkin == 'princess-castle'}}">
+                <view class="palace-moon"></view>
+                <view class="palace-cloud cloud-left"></view>
+                <view class="palace-cloud cloud-right"></view>
+                <view class="palace-window">
+                    <view class="window-lattice window-lattice-vertical"></view>
+                    <view class="window-lattice lattice-one"></view>
+                    <view class="window-lattice lattice-two"></view>
+                    <view class="window-lattice lattice-three"></view>
+                </view>
+                <view class="palace-silk silk-left"></view>
+                <view class="palace-silk silk-right"></view>
+                <view class="palace-lantern lantern-left"></view>
+                <view class="palace-lantern lantern-right"></view>
+                <view class="palace-spark spark-one"></view>
+                <view class="palace-spark spark-two"></view>
+                <view class="palace-spark spark-three"></view>
+            </view>
+            <image class="header-bg-image" mode="aspectFill" src="{{headerBg}}" wx:if="{{selectedSkin != 'princess-castle' && headerBg}}"></image>
+            <view class="soft-cloud cloud-1" wx:if="{{selectedSkin != 'princess-castle' && !headerBg}}"></view>
+            <view class="soft-cloud cloud-2" wx:if="{{selectedSkin != 'princess-castle' && !headerBg}}"></view>
+            <view class="header-asset-layer" wx:if="{{selectedSkin != 'princess-castle' && !headerBg&&headerImages.length>0}}">
                 <image class="header-asset asset-{{index}}" mode="aspectFit" src="{{item}}" wx:for="{{headerImages}}" wx:key="*this"></image>
             </view>
-            <block wx:if="{{!headerBg&&headerImages.length===0}}">
+            <block wx:if="{{selectedSkin != 'princess-castle' && !headerBg&&headerImages.length===0}}">
                 <view class="header-character char-round">
                     <view class="char-eye eye-left"></view>
                     <view class="char-eye eye-right"></view>
@@ -38,8 +56,8 @@
                     <view class="char-blush blush-right"></view>
                 </view>
             </block>
-            <view class="tiny-label label-a" wx:if="{{!headerBg}}">软糖衣柜</view>
-            <view class="tiny-label label-b" wx:if="{{!headerBg}}">今日搭配</view>
+            <view class="tiny-label label-a" wx:if="{{selectedSkin != 'princess-castle' && !headerBg}}">软糖衣柜</view>
+            <view class="tiny-label label-b" wx:if="{{selectedSkin != 'princess-castle' && !headerBg}}">今日搭配</view>
         </view>
         <view bindtap="goBack" class="kawaii-back">
             <view class="kawaii-back-icon">
@@ -81,8 +99,18 @@
     <view class="main-content" wx:if="{{activeTab===0}}">
         <scroll-view scroll-y class="side-bar" scroll-into-view="{{sideScrollIntoView}}" scroll-with-animation="{{false}}" show-scrollbar="{{false}}">
             <view bindtap="switchCat" class="side-item {{activeCat===index?'active':''}}" data-index="{{index}}" id="side-cat-{{index}}" wx:for="{{groupedItems}}" wx:key="id">
+                <view class="side-lantern-glow"></view>
+                <view class="side-moon-orbit">
+                    <view class="side-moon-body">
+                        <view class="moon-crater crater-one"></view>
+                        <view class="moon-crater crater-two"></view>
+                    </view>
+                    <view class="side-moon-cloud moon-cloud-one"></view>
+                    <view class="side-moon-cloud moon-cloud-two"></view>
+                </view>
                 <text class="side-rank">{{index+1}}</text>
                 <text class="side-name">{{item.name}}</text>
+                <view class="side-thread"></view>
             </view>
             <view style="height:140rpx;"></view>
         </scroll-view>
@@ -94,11 +122,14 @@
             <view class="cat-section" id="{{item.id}}" wx:if="{{!(showSearch&&searchKeyword&&count===0)}}" wx:for="{{groupedItems}}" wx:for-index="groupIndex" wx:key="id">
                 <view class="cat-title">
                     <view class="cat-title-dot"></view>
+                    <view class="cat-title-jade-dot"></view>
                     <text>{{groupIndex+1}}. {{item.name}}</text>
                     <text class="cat-count">({{item.items.length}})</text>
+                    <view class="cat-title-cloud-mark"></view>
                 </view>
                 <view class="cloth-drag-list" id="index-drag-list-{{groupIndex}}">
                     <view bindlongpress="onDragStart" bindtap="enterItem" bindtouchcancel="onDragEnd" bindtouchend="onDragEnd" bindtouchmove="onDragMove" bindtouchstart="onDragTouchStart" class="{{cloth.cls}} index-drag-row index-drag-row-{{groupIndex}}" data-group-index="{{groupIndex}}" data-id="{{cloth._id}}" data-index="{{clothIndex}}" wx:for="{{item.items}}" wx:for-index="clothIndex" wx:for-item="cloth" wx:key="_id">
+                        <view class="cloth-card-watermark watermark-{{groupIndex % 4}} watermark-item-{{clothIndex % 3}}"></view>
                         <view class="cloth-rank">
                             <text>{{cloth.display_rank}}</text>
                         </view>
@@ -114,12 +145,30 @@
                             <text>=</text>
                         </view>
                         <view catchtap="toggleClothSelection" class="cloth-select-btn {{cloth.selected?'selected':''}} {{cloth.isInUse?'in-use':''}}" data-id="{{cloth._id}}">
-                            <text>{{cloth.selectText}}</text>
+                            <block wx:if="{{selectedSkin == 'princess-castle' && !cloth.isInUse}}">
+                                <view class="mooncake-button">
+                                    <view class="mooncake-ridge ridge-top"></view>
+                                    <view class="mooncake-ridge ridge-right"></view>
+                                    <view class="mooncake-ridge ridge-bottom"></view>
+                                    <view class="mooncake-ridge ridge-left"></view>
+                                    <view class="mooncake-dot dot-one"></view>
+                                    <view class="mooncake-dot dot-two"></view>
+                                    <view class="mooncake-dot dot-three"></view>
+                                    <view class="mooncake-center">
+                                        <text>{{cloth.selected?'✓':'+'}}</text>
+                                    </view>
+                                </view>
+                            </block>
+                            <text wx:else>{{cloth.selectText}}</text>
                         </view>
                     </view>
                 </view>
                 <view class="empty-cat" wx:if="{{item.items.length===0}}">
-                    <view class="empty-face"></view>
+                    <view class="empty-moon-window">
+                        <view class="empty-hanger-line"></view>
+                        <view class="empty-petal petal-left"></view>
+                        <view class="empty-petal petal-right"></view>
+                    </view>
                     <text>{{showSearch&&searchMode==='item'?'这个分类没有匹配结果':'这个分类还没有衣服'}}</text>
                 </view>
             </view>
@@ -146,7 +195,21 @@
                 <text>=</text>
             </view>
             <view class="cloth-select-btn {{floatItem.selected?'selected':''}} {{floatItem.isInUse?'in-use':''}}">
-                <text>{{floatItem.selectText}}</text>
+                <block wx:if="{{selectedSkin == 'princess-castle' && !floatItem.isInUse}}">
+                    <view class="mooncake-button">
+                        <view class="mooncake-ridge ridge-top"></view>
+                        <view class="mooncake-ridge ridge-right"></view>
+                        <view class="mooncake-ridge ridge-bottom"></view>
+                        <view class="mooncake-ridge ridge-left"></view>
+                        <view class="mooncake-dot dot-one"></view>
+                        <view class="mooncake-dot dot-two"></view>
+                        <view class="mooncake-dot dot-three"></view>
+                        <view class="mooncake-center">
+                            <text>{{floatItem.selected?'✓':'+'}}</text>
+                        </view>
+                    </view>
+                </block>
+                <text wx:else>{{floatItem.selectText}}</text>
             </view>
         </view>
     </view>
@@ -262,6 +325,35 @@
     </view>
     <item-action-panel bind:close="closeItemPanel" bind:edit="editPanelItem" bind:statuschange="markPanelItemStatus" item="{{panelItem}}" show="{{showItemPanel}}"></item-action-panel>
     <view bindtap="goAdd" class="fab-add kawaii-btn {{selectedItems.length>0?'fab-lift':''}}" wx:if="{{activeTab===0}}">
-        <text>+</text>
+        <block wx:if="{{selectedSkin == 'princess-castle'}}">
+            <view class="fab-moon-glow"></view>
+            <view class="fab-moon-disc">
+                <view class="fab-moon-crater crater-a"></view>
+                <view class="fab-moon-crater crater-b"></view>
+                <view class="fab-moon-shine shine-a"></view>
+                <view class="fab-moon-shine shine-b"></view>
+            </view>
+            <view class="fab-rabbit-body">
+                <view class="fab-rabbit-tail"></view>
+                <view class="fab-rabbit-paw paw-left"></view>
+                <view class="fab-rabbit-paw paw-right"></view>
+            </view>
+            <view class="fab-rabbit-head">
+                <view class="rabbit-sleep-eye eye-left"></view>
+                <view class="rabbit-sleep-eye eye-right"></view>
+                <view class="rabbit-blush blush-left"></view>
+                <view class="rabbit-blush blush-right"></view>
+            </view>
+            <view class="fab-rabbit-ear fab-ear-left"></view>
+            <view class="fab-rabbit-ear fab-ear-right"></view>
+            <view class="fab-rabbit-sleep sleep-one"></view>
+            <view class="fab-rabbit-sleep sleep-two"></view>
+            <text class="fab-rabbit-plus">+</text>
+            <view class="fab-rabbit-cloud fab-cloud-left"></view>
+            <view class="fab-rabbit-cloud fab-cloud-right"></view>
+            <view class="fab-rabbit-star fab-star-one"></view>
+            <view class="fab-rabbit-star fab-star-two"></view>
+        </block>
+        <text wx:else>+</text>
     </view>
 </view>

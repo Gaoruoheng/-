@@ -332,8 +332,907 @@
 
 .save-btn {
   height: 100rpx;
-  margin: 8rpx 0 0;
+  position: fixed;
+  left: 32rpx;
+  right: 32rpx;
+  bottom: calc(28rpx + env(safe-area-inset-bottom));
+  z-index: 20;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 32rpx;
   font-weight: 900;
-  width: 100%;
+  width: auto;
+  box-sizing: border-box;
+}
+
+.save-spacer {
+  height: calc(156rpx + env(safe-area-inset-bottom));
+}
+
+/* Moon-palace theme for the add flow. It follows the Home skin switch. */
+.container.skin-princess-castle {
+  position: relative;
+  padding: 0 26rpx;
+  background:
+    radial-gradient(circle at 14% 9%, rgba(222, 214, 255, 0.72) 0, rgba(222, 214, 255, 0) 210rpx),
+    radial-gradient(circle at 92% 18%, rgba(255, 234, 172, 0.48) 0, rgba(255, 234, 172, 0) 210rpx),
+    linear-gradient(180deg, #f8f3ff 0%, #fff9fb 46%, #f3f8ff 100%);
+  color: #49335f;
+  overflow: hidden;
+}
+
+.container.skin-princess-castle .add-bg-moon,
+.container.skin-princess-castle .add-bg-cloud {
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+}
+
+.container.skin-princess-castle .add-bg-moon {
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 34% 28%, rgba(255, 255, 252, 0.95), rgba(255, 236, 161, 0.5) 48%, rgba(255, 236, 161, 0) 72%);
+}
+
+.container.skin-princess-castle .bg-moon-one {
+  width: 190rpx;
+  height: 190rpx;
+  right: -52rpx;
+  top: 112rpx;
+  opacity: 0.64;
+}
+
+.container.skin-princess-castle .bg-moon-two {
+  width: 128rpx;
+  height: 128rpx;
+  left: -42rpx;
+  top: 520rpx;
+  opacity: 0.34;
+}
+
+.container.skin-princess-castle .add-bg-cloud {
+  height: 38rpx;
+  border-radius: 999rpx;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.86), rgba(225, 216, 250, 0.34));
+  box-shadow: 0 10rpx 24rpx rgba(87, 65, 116, 0.07);
+}
+
+.container.skin-princess-castle .bg-cloud-one {
+  width: 260rpx;
+  left: -78rpx;
+  top: 230rpx;
+}
+
+.container.skin-princess-castle .bg-cloud-two {
+  width: 230rpx;
+  right: -82rpx;
+  top: 760rpx;
+}
+
+.container.skin-princess-castle .top-row {
+  height: 132rpx;
+  padding-top: 70rpx;
+  position: relative;
+  z-index: 3;
+  background: transparent;
+  border-bottom: 0;
+  box-shadow: none;
+}
+
+.container.skin-princess-castle .top-label {
+  height: 54rpx;
+  padding: 0 22rpx;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1rpx solid rgba(159, 126, 177, 0.24);
+  border-radius: 999rpx;
+  box-shadow: 0 8rpx 20rpx rgba(82, 62, 111, 0.08), inset 0 0 0 2rpx rgba(255, 255, 255, 0.52);
+  color: #735b8e;
+  font-size: 24rpx;
+}
+
+.container.skin-princess-castle .kawaii-back-icon {
+  background:
+    radial-gradient(circle at 34% 28%, #fffdf6, #f8e4ff 56%, #d8c2ec 100%);
+  border: 1rpx solid rgba(169, 128, 190, 0.28);
+  box-shadow: 0 8rpx 18rpx rgba(83, 62, 111, 0.11), inset 0 0 0 3rpx rgba(255, 255, 255, 0.5);
+}
+
+.container.skin-princess-castle .page-scroll {
+  height: calc(100vh - 132rpx);
+  position: relative;
+  z-index: 2;
+}
+
+.container.skin-princess-castle .hero-card {
+  min-height: 178rpx;
+  margin: 8rpx 0 20rpx;
+  padding: 24rpx 190rpx 24rpx 24rpx;
+  position: relative;
+  overflow: hidden;
+  border: 1rpx solid rgba(168, 133, 184, 0.26);
+  border-radius: 26rpx;
+  background:
+    linear-gradient(110deg, rgba(255, 255, 255, 0.82), rgba(249, 239, 255, 0.58) 52%, rgba(231, 239, 255, 0.58)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.64), rgba(255, 255, 255, 0.2));
+  box-shadow: 0 14rpx 30rpx rgba(82, 62, 111, 0.10), inset 0 0 0 2rpx rgba(255, 255, 255, 0.54);
+}
+
+.container.skin-princess-castle .hero-card::before {
+  content: "";
+  position: absolute;
+  left: 22rpx;
+  right: 24rpx;
+  bottom: 22rpx;
+  height: 1rpx;
+  background: linear-gradient(90deg, transparent, rgba(180, 145, 74, 0.28), transparent);
+}
+
+.container.skin-princess-castle .add-hero-glow {
+  position: absolute;
+  right: 28rpx;
+  top: 20rpx;
+  width: 154rpx;
+  height: 154rpx;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 234, 156, 0.58), rgba(255, 234, 156, 0) 72%);
+}
+
+.container.skin-princess-castle .hero-copy {
+  position: relative;
+  z-index: 3;
+  padding-right: 0;
+}
+
+.container.skin-princess-castle .eyebrow {
+  padding: 7rpx 14rpx;
+  margin-bottom: 10rpx;
+  background: linear-gradient(135deg, rgba(255, 254, 245, 0.92), rgba(246, 224, 165, 0.72));
+  border: 1rpx solid rgba(181, 137, 62, 0.28);
+  color: #8a6330;
+  font-size: 20rpx;
+  box-shadow: none;
+}
+
+.container.skin-princess-castle .title-text {
+  color: #4f3970;
+  font-size: 39rpx;
+  line-height: 1.14;
+  margin-bottom: 8rpx;
+  text-shadow: 0 2rpx 0 rgba(255, 255, 255, 0.9);
+}
+
+.container.skin-princess-castle .title-sub {
+  display: block;
+  color: #7c6990;
+  font-size: 23rpx;
+  line-height: 1.36;
+}
+
+.container.skin-princess-castle .hero-sticker {
+  display: none;
+}
+
+.container.skin-princess-castle .add-hero-window {
+  position: absolute;
+  right: 24rpx;
+  top: 17rpx;
+  width: 152rpx;
+  height: 142rpx;
+  border-radius: 76rpx 76rpx 42rpx 42rpx;
+  border: 1rpx solid rgba(155, 119, 173, 0.26);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.66), rgba(230, 220, 250, 0.38));
+  box-shadow: inset 0 0 0 4rpx rgba(255, 255, 255, 0.34), 0 8rpx 18rpx rgba(86, 64, 114, 0.08);
+  overflow: hidden;
+  z-index: 2;
+}
+
+.container.skin-princess-castle .hero-moon-disc {
+  position: absolute;
+  left: 26rpx;
+  top: 26rpx;
+  width: 92rpx;
+  height: 92rpx;
+  border-radius: 50%;
+  border: 2rpx solid rgba(255, 255, 255, 0.76);
+  background:
+    radial-gradient(circle at 33% 25%, #fffef3, #ffe995 58%, #d6ad4b 100%);
+  box-shadow: inset -8rpx -10rpx 18rpx rgba(143, 91, 22, 0.12), 0 8rpx 18rpx rgba(134, 94, 35, 0.13);
+}
+
+.container.skin-princess-castle .hero-moon-crater,
+.container.skin-princess-castle .hero-moon-shine {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.container.skin-princess-castle .hero-moon-crater {
+  background: rgba(173, 123, 39, 0.13);
+}
+
+.container.skin-princess-castle .hero-moon-disc .crater-a {
+  width: 12rpx;
+  height: 12rpx;
+  right: 22rpx;
+  top: 22rpx;
+}
+
+.container.skin-princess-castle .hero-moon-disc .crater-b {
+  width: 8rpx;
+  height: 8rpx;
+  left: 28rpx;
+  bottom: 24rpx;
+}
+
+.container.skin-princess-castle .hero-moon-shine {
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.container.skin-princess-castle .hero-moon-disc .shine-a {
+  width: 8rpx;
+  height: 8rpx;
+  left: 26rpx;
+  top: 18rpx;
+}
+
+.container.skin-princess-castle .hero-moon-disc .shine-b {
+  width: 5rpx;
+  height: 5rpx;
+  right: 17rpx;
+  top: 46rpx;
+}
+
+.container.skin-princess-castle .hero-rabbit-body {
+  position: absolute;
+  left: 44rpx;
+  top: 42rpx;
+  width: 64rpx;
+  height: 44rpx;
+  border: 1rpx solid rgba(178, 143, 84, 0.22);
+  border-radius: 44rpx 48rpx 34rpx 36rpx;
+  background: linear-gradient(180deg, #fff, #fffdf8 60%, #f1e7f5);
+  box-shadow: inset 0 0 0 2rpx rgba(255, 255, 255, 0.52);
+  transform: rotate(-11deg);
+  z-index: 4;
+}
+
+.container.skin-princess-castle .hero-rabbit-tail {
+  position: absolute;
+  left: -7rpx;
+  top: 21rpx;
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  border: 1rpx solid rgba(178, 143, 84, 0.18);
+  background: #fff;
+}
+
+.container.skin-princess-castle .hero-rabbit-head {
+  position: absolute;
+  left: 88rpx;
+  top: 50rpx;
+  width: 34rpx;
+  height: 32rpx;
+  border-radius: 48% 48% 46% 46%;
+  border: 1rpx solid rgba(178, 143, 84, 0.2);
+  background: linear-gradient(180deg, #fff, #fffdf7 62%, #f3e9f6);
+  transform: rotate(10deg);
+  z-index: 5;
+}
+
+.container.skin-princess-castle .hero-rabbit-eye {
+  position: absolute;
+  top: 13rpx;
+  width: 7rpx;
+  height: 5rpx;
+  border-bottom: 2rpx solid rgba(78, 54, 98, 0.62);
+  border-radius: 0 0 999rpx 999rpx;
+}
+
+.container.skin-princess-castle .hero-rabbit-eye.eye-left {
+  left: 8rpx;
+}
+
+.container.skin-princess-castle .hero-rabbit-eye.eye-right {
+  right: 8rpx;
+}
+
+.container.skin-princess-castle .hero-rabbit-ear {
+  position: absolute;
+  top: 29rpx;
+  width: 12rpx;
+  height: 34rpx;
+  border-radius: 999rpx;
+  border: 1rpx solid rgba(178, 143, 84, 0.18);
+  background: linear-gradient(180deg, #fff, #fffdf7 60%, #efe2f5);
+  z-index: 3;
+}
+
+.container.skin-princess-castle .hero-rabbit-ear.ear-left {
+  left: 93rpx;
+  transform: rotate(18deg);
+}
+
+.container.skin-princess-castle .hero-rabbit-ear.ear-right {
+  left: 105rpx;
+  transform: rotate(42deg);
+}
+
+.container.skin-princess-castle .hero-window-cloud,
+.container.skin-princess-castle .add-hero-cloud {
+  position: absolute;
+  border-radius: 999rpx;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.92), rgba(229, 223, 255, 0.64));
+}
+
+.container.skin-princess-castle .hero-window-cloud.cloud-a {
+  width: 78rpx;
+  height: 22rpx;
+  left: 6rpx;
+  bottom: 15rpx;
+  z-index: 6;
+}
+
+.container.skin-princess-castle .hero-window-cloud.cloud-b {
+  width: 72rpx;
+  height: 20rpx;
+  right: 3rpx;
+  bottom: 12rpx;
+  z-index: 6;
+}
+
+.container.skin-princess-castle .add-hero-cloud {
+  height: 16rpx;
+  z-index: 1;
+  opacity: 0.72;
+}
+
+.container.skin-princess-castle .hero-cloud-left {
+  width: 110rpx;
+  left: 18rpx;
+  bottom: 28rpx;
+}
+
+.container.skin-princess-castle .hero-cloud-right {
+  width: 90rpx;
+  right: 156rpx;
+  top: 32rpx;
+}
+
+.container.skin-princess-castle .add-hero-star {
+  position: absolute;
+  width: 7rpx;
+  height: 7rpx;
+  border-radius: 50%;
+  background: #fff1a6;
+  box-shadow: 0 0 10rpx rgba(255, 225, 102, 0.65);
+  z-index: 3;
+}
+
+.container.skin-princess-castle .hero-star-one {
+  right: 190rpx;
+  top: 54rpx;
+}
+
+.container.skin-princess-castle .hero-star-two {
+  right: 34rpx;
+  bottom: 31rpx;
+}
+
+.container.skin-princess-castle .upload-box {
+  height: 344rpx;
+  margin-bottom: 22rpx;
+  position: relative;
+  overflow: hidden;
+  border: 1rpx solid rgba(160, 124, 178, 0.26);
+  border-radius: 26rpx;
+  background:
+    radial-gradient(circle at 50% 43%, rgba(255, 242, 184, 0.58), rgba(255, 242, 184, 0) 42%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(239, 231, 255, 0.58) 58%, rgba(226, 239, 255, 0.52));
+  box-shadow: 0 14rpx 30rpx rgba(82, 62, 111, 0.10), inset 0 0 0 2rpx rgba(255, 255, 255, 0.52);
+}
+
+.container.skin-princess-castle .upload-box::before {
+  content: "";
+  position: absolute;
+  left: 28rpx;
+  right: 28rpx;
+  top: 24rpx;
+  bottom: 24rpx;
+  border: 1rpx solid rgba(176, 141, 73, 0.18);
+  border-radius: 130rpx 130rpx 36rpx 36rpx;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.container.skin-princess-castle .upload-placeholder {
+  position: relative;
+  z-index: 3;
+  background: transparent;
+}
+
+.container.skin-princess-castle .upload-sticker {
+  display: none;
+}
+
+.container.skin-princess-castle .preview-img {
+  position: relative;
+  z-index: 3;
+  border-radius: 24rpx;
+}
+
+.container.skin-princess-castle .upload-frame-glow {
+  position: absolute;
+  left: 50%;
+  top: 38rpx;
+  width: 220rpx;
+  height: 220rpx;
+  margin-left: -110rpx;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 232, 143, 0.62), rgba(255, 232, 143, 0) 72%);
+  z-index: 1;
+}
+
+.container.skin-princess-castle .upload-cloud {
+  position: absolute;
+  height: 30rpx;
+  border-radius: 999rpx;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.92), rgba(230, 224, 252, 0.62));
+  box-shadow: 0 8rpx 18rpx rgba(82, 62, 111, 0.07);
+  z-index: 2;
+}
+
+.container.skin-princess-castle .upload-cloud-left {
+  width: 150rpx;
+  left: 42rpx;
+  top: 218rpx;
+}
+
+.container.skin-princess-castle .upload-cloud-right {
+  width: 164rpx;
+  right: 44rpx;
+  top: 235rpx;
+}
+
+.container.skin-princess-castle .upload-palace-symbol {
+  width: 190rpx;
+  height: 154rpx;
+  margin-bottom: 12rpx;
+  position: relative;
+}
+
+.container.skin-princess-castle .upload-jade-ring {
+  position: absolute;
+  left: 18rpx;
+  top: 6rpx;
+  width: 154rpx;
+  height: 136rpx;
+  border-radius: 78rpx 78rpx 36rpx 36rpx;
+  border: 1rpx solid rgba(137, 184, 172, 0.42);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.44), rgba(220, 242, 238, 0.22));
+  box-shadow: inset 0 0 0 5rpx rgba(255, 255, 255, 0.36);
+}
+
+.container.skin-princess-castle .upload-moon-disc {
+  position: absolute;
+  left: 48rpx;
+  top: 24rpx;
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 25%, #fffef3, #ffe895 58%, #d7ad4c 100%);
+  box-shadow: inset -8rpx -11rpx 20rpx rgba(151, 95, 22, 0.13), 0 8rpx 16rpx rgba(120, 85, 30, 0.12);
+}
+
+.container.skin-princess-castle .upload-moon-mark {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(172, 122, 41, 0.13);
+}
+
+.container.skin-princess-castle .mark-one {
+  width: 12rpx;
+  height: 12rpx;
+  right: 24rpx;
+  top: 24rpx;
+}
+
+.container.skin-princess-castle .mark-two {
+  width: 8rpx;
+  height: 8rpx;
+  left: 28rpx;
+  bottom: 24rpx;
+}
+
+.container.skin-princess-castle .upload-rabbit-body {
+  position: absolute;
+  left: 60rpx;
+  top: 45rpx;
+  width: 70rpx;
+  height: 48rpx;
+  border-radius: 48rpx 54rpx 38rpx 40rpx;
+  background: linear-gradient(180deg, #fff, #fffdf7 58%, #efe3f4);
+  border: 1rpx solid rgba(179, 143, 82, 0.2);
+  transform: rotate(-10deg);
+  z-index: 3;
+}
+
+.container.skin-princess-castle .upload-rabbit-head {
+  position: absolute;
+  left: 108rpx;
+  top: 56rpx;
+  width: 34rpx;
+  height: 32rpx;
+  border-radius: 48%;
+  background: linear-gradient(180deg, #fff, #fffdf7 62%, #f3e8f6);
+  border: 1rpx solid rgba(179, 143, 82, 0.2);
+  transform: rotate(10deg);
+  z-index: 4;
+}
+
+.container.skin-princess-castle .upload-rabbit-ear {
+  position: absolute;
+  top: 36rpx;
+  width: 12rpx;
+  height: 34rpx;
+  border-radius: 999rpx;
+  border: 1rpx solid rgba(179, 143, 82, 0.18);
+  background: linear-gradient(180deg, #fff, #fffdf7 60%, #efe3f4);
+  z-index: 2;
+}
+
+.container.skin-princess-castle .upload-rabbit-ear.ear-one {
+  left: 112rpx;
+  transform: rotate(18deg);
+}
+
+.container.skin-princess-castle .upload-rabbit-ear.ear-two {
+  left: 124rpx;
+  transform: rotate(42deg);
+}
+
+.container.skin-princess-castle .upload-silk-cloud {
+  position: absolute;
+  height: 22rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.88);
+  z-index: 5;
+}
+
+.container.skin-princess-castle .upload-silk-cloud.cloud-one {
+  width: 88rpx;
+  left: 14rpx;
+  bottom: 22rpx;
+}
+
+.container.skin-princess-castle .upload-silk-cloud.cloud-two {
+  width: 92rpx;
+  right: 6rpx;
+  bottom: 18rpx;
+}
+
+.container.skin-princess-castle .upload-hint {
+  color: #4f3970;
+  font-size: 28rpx;
+  text-shadow: 0 2rpx 0 rgba(255, 255, 255, 0.88);
+}
+
+.container.skin-princess-castle .upload-sub {
+  color: #7b698b;
+  font-size: 22rpx;
+}
+
+.container.skin-princess-castle .upload-badge {
+  height: 58rpx;
+  right: 22rpx;
+  bottom: 20rpx;
+  padding: 0 18rpx 0 12rpx;
+  display: flex;
+  align-items: center;
+  background: rgba(255, 253, 246, 0.9);
+  border: 1rpx solid rgba(181, 137, 62, 0.28);
+  border-radius: 999rpx;
+  box-shadow: 0 8rpx 18rpx rgba(110, 77, 33, 0.10), inset 0 0 0 2rpx rgba(255, 255, 255, 0.48);
+  color: #76502c;
+  font-size: 23rpx;
+  z-index: 6;
+}
+
+.container.skin-princess-castle .badge-mooncake,
+.container.skin-princess-castle .cat-mooncake,
+.container.skin-princess-castle .save-seal {
+  position: relative;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 28%, #fffaf0, #f0cf76 58%, #bd8f42 100%);
+}
+
+.container.skin-princess-castle .badge-mooncake {
+  width: 34rpx;
+  height: 34rpx;
+  margin-right: 8rpx;
+  box-shadow: inset 0 0 0 4rpx rgba(255, 255, 255, 0.24);
+}
+
+.container.skin-princess-castle .badge-mooncake-ring,
+.container.skin-princess-castle .cat-mooncake-ring,
+.container.skin-princess-castle .save-seal-ring {
+  position: absolute;
+  border: 1rpx solid rgba(111, 72, 25, 0.18);
+  border-radius: 50%;
+  left: 7rpx;
+  right: 7rpx;
+  top: 7rpx;
+  bottom: 7rpx;
+}
+
+.container.skin-princess-castle .badge-mooncake-dot {
+  position: absolute;
+  width: 4rpx;
+  height: 4rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.58);
+}
+
+.container.skin-princess-castle .badge-mooncake-dot.dot-a {
+  left: 10rpx;
+  top: 9rpx;
+}
+
+.container.skin-princess-castle .badge-mooncake-dot.dot-b {
+  right: 9rpx;
+  bottom: 10rpx;
+}
+
+.container.skin-princess-castle .form-box,
+.container.skin-princess-castle .category-box {
+  position: relative;
+  overflow: hidden;
+  padding: 24rpx;
+  margin-bottom: 22rpx;
+  border: 1rpx solid rgba(160, 124, 178, 0.24);
+  border-radius: 24rpx;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.80), rgba(247, 239, 255, 0.58)),
+    linear-gradient(180deg, rgba(236, 251, 246, 0.18), rgba(255, 255, 255, 0.12));
+  box-shadow: 0 12rpx 26rpx rgba(82, 62, 111, 0.08), inset 0 0 0 2rpx rgba(255, 255, 255, 0.5);
+}
+
+.container.skin-princess-castle .panel-watermark,
+.container.skin-princess-castle .panel-cloud {
+  pointer-events: none;
+  position: absolute;
+}
+
+.container.skin-princess-castle .panel-watermark {
+  right: 22rpx;
+  top: 18rpx;
+  width: 124rpx;
+  height: 124rpx;
+  border-radius: 50%;
+  border: 1rpx solid rgba(181, 137, 62, 0.14);
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.44), rgba(255, 231, 151, 0.14) 45%, rgba(255, 231, 151, 0) 70%);
+  opacity: 0.7;
+}
+
+.container.skin-princess-castle .category-watermark {
+  right: -14rpx;
+  top: 44rpx;
+  width: 150rpx;
+  height: 150rpx;
+  opacity: 0.48;
+}
+
+.container.skin-princess-castle .panel-cloud {
+  width: 130rpx;
+  height: 26rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.58);
+  right: 42rpx;
+  bottom: 20rpx;
+}
+
+.container.skin-princess-castle .section-head {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 20rpx;
+}
+
+.container.skin-princess-castle .section-title {
+  color: #513a70;
+  font-size: 29rpx;
+  text-shadow: 0 2rpx 0 rgba(255, 255, 255, 0.86);
+}
+
+.container.skin-princess-castle .form-item {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 22rpx;
+}
+
+.container.skin-princess-castle .label {
+  color: #645078;
+  font-size: 24rpx;
+  margin-bottom: 10rpx;
+  text-shadow: none;
+}
+
+.container.skin-princess-castle .kawaii-input,
+.container.skin-princess-castle .new-category-input {
+  height: 78rpx;
+  padding: 0 22rpx;
+  border: 1rpx solid rgba(137, 184, 172, 0.36);
+  border-radius: 20rpx;
+  background: rgba(255, 255, 255, 0.76);
+  box-shadow: inset 0 0 0 2rpx rgba(255, 255, 255, 0.52), 0 6rpx 14rpx rgba(82, 62, 111, 0.04);
+  color: #49335f;
+  font-size: 27rpx;
+}
+
+.container.skin-princess-castle .add-cat-toggle {
+  height: 52rpx;
+  min-width: 108rpx;
+  padding: 0 18rpx;
+  background: linear-gradient(135deg, rgba(255, 254, 244, 0.9), rgba(240, 211, 132, 0.72));
+  border: 1rpx solid rgba(181, 137, 62, 0.28);
+  border-radius: 999rpx;
+  box-shadow: 0 7rpx 14rpx rgba(120, 83, 30, 0.10);
+  color: #78522e;
+  font-size: 23rpx;
+}
+
+.container.skin-princess-castle .category-grid {
+  position: relative;
+  z-index: 2;
+}
+
+.container.skin-princess-castle .category-chip {
+  min-height: 60rpx;
+  padding: 0 18rpx;
+  margin: 0 14rpx 14rpx 0;
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1rpx solid rgba(159, 126, 177, 0.24);
+  border-radius: 999rpx;
+  box-shadow: 0 7rpx 14rpx rgba(82, 62, 111, 0.05), inset 0 0 0 2rpx rgba(255, 255, 255, 0.34);
+  color: #614c78;
+  font-size: 25rpx;
+}
+
+.container.skin-princess-castle .category-chip.active {
+  background: linear-gradient(135deg, #73539a, #9c7ac0 58%, #d5c0ed);
+  border-color: rgba(255, 255, 255, 0.66);
+  box-shadow: 0 9rpx 18rpx rgba(82, 62, 111, 0.15), inset 0 0 0 2rpx rgba(255, 255, 255, 0.22);
+  color: #fffdf8;
+}
+
+.container.skin-princess-castle .chip-dot {
+  width: 18rpx;
+  height: 18rpx;
+  margin-right: 10rpx;
+  border: 1rpx solid rgba(181, 137, 62, 0.28);
+  background: radial-gradient(circle at 34% 28%, #fffef5, #f0d77f 64%, #c89a46);
+  box-shadow: none;
+}
+
+.container.skin-princess-castle .category-chip.active .chip-dot {
+  background: radial-gradient(circle at 34% 28%, #fff, #e9dcff 64%, #ac91cf);
+  border-color: rgba(255, 255, 255, 0.42);
+}
+
+.container.skin-princess-castle .chip-cloud {
+  position: absolute;
+  right: 12rpx;
+  bottom: 7rpx;
+  width: 52rpx;
+  height: 10rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.38);
+  pointer-events: none;
+}
+
+.container.skin-princess-castle .new-category-panel {
+  position: relative;
+  z-index: 2;
+  margin-top: 16rpx;
+  padding: 14rpx;
+  border: 1rpx solid rgba(137, 184, 172, 0.26);
+  border-radius: 22rpx;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.68), rgba(228, 247, 242, 0.34));
+  box-shadow: inset 0 0 0 2rpx rgba(255, 255, 255, 0.36);
+}
+
+.container.skin-princess-castle .new-category-btn {
+  width: 116rpx;
+  height: 72rpx;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #fff9de, #e6bf67);
+  border: 1rpx solid rgba(154, 104, 37, 0.22);
+  border-radius: 999rpx;
+  box-shadow: 0 8rpx 16rpx rgba(120, 83, 30, 0.12), inset 0 0 0 2rpx rgba(255, 255, 255, 0.34);
+  color: #6e4c2a;
+  font-size: 23rpx;
+}
+
+.container.skin-princess-castle .cat-mooncake {
+  width: 34rpx;
+  height: 34rpx;
+  margin-right: 4rpx;
+  flex-shrink: 0;
+}
+
+.container.skin-princess-castle .selected-tip {
+  position: relative;
+  z-index: 2;
+  margin-top: 16rpx;
+  padding: 15rpx 18rpx;
+  background: rgba(238, 248, 244, 0.62);
+  border: 1rpx solid rgba(137, 184, 172, 0.24);
+  border-radius: 18rpx;
+  color: #5d4c72;
+  font-size: 23rpx;
+}
+
+.container.skin-princess-castle .save-btn {
+  height: 92rpx;
+  left: 26rpx;
+  right: 26rpx;
+  bottom: calc(24rpx + env(safe-area-inset-bottom));
+  z-index: 30;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  overflow: hidden;
+  border: 1rpx solid rgba(255, 255, 255, 0.76);
+  border-radius: 999rpx;
+  background:
+    linear-gradient(135deg, #604383, #8d68b3 56%, #d7bcea);
+  box-shadow: 0 14rpx 26rpx rgba(82, 62, 111, 0.18), inset 0 0 0 2rpx rgba(255, 255, 255, 0.22);
+  color: #fffdf7;
+  font-size: 30rpx;
+  text-shadow: 0 2rpx 6rpx rgba(49, 34, 70, 0.24);
+}
+
+.container.skin-princess-castle .save-spacer {
+  height: calc(140rpx + env(safe-area-inset-bottom));
+}
+
+.container.skin-princess-castle .save-btn text {
+  position: relative;
+  z-index: 4;
+}
+
+.container.skin-princess-castle .save-cloud {
+  position: absolute;
+  height: 24rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.22);
+  z-index: 2;
+}
+
+.container.skin-princess-castle .save-cloud-left {
+  width: 128rpx;
+  left: 28rpx;
+  bottom: 18rpx;
+}
+
+.container.skin-princess-castle .save-cloud-right {
+  width: 112rpx;
+  right: 26rpx;
+  top: 18rpx;
+}
+
+.container.skin-princess-castle .save-seal {
+  position: absolute;
+  left: 22rpx;
+  top: 19rpx;
+  width: 52rpx;
+  height: 52rpx;
+  z-index: 3;
+  box-shadow: 0 8rpx 14rpx rgba(64, 43, 84, 0.14), inset 0 0 0 3rpx rgba(255, 255, 255, 0.2);
 }

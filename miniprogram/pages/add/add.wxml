@@ -1,6 +1,11 @@
-<view class="container">
-  
-  
+<view class="container skin-{{selectedSkin}}">
+  <block wx:if="{{selectedSkin == 'princess-castle'}}">
+    <view class="add-bg-moon bg-moon-one"></view>
+    <view class="add-bg-moon bg-moon-two"></view>
+    <view class="add-bg-cloud bg-cloud-one"></view>
+    <view class="add-bg-cloud bg-cloud-two"></view>
+  </block>
+
   <view class="top-row">
     <view class="kawaii-back" bindtap="goBack">
       <view class="kawaii-back-icon"><view class="kawaii-back-stroke"></view></view>
@@ -13,28 +18,84 @@
 
   <scroll-view class="page-scroll" scroll-y show-scrollbar="{{false}}">
     <view class="hero-card">
+      <block wx:if="{{selectedSkin == 'princess-castle'}}">
+        <view class="add-hero-glow"></view>
+        <view class="add-hero-cloud hero-cloud-left"></view>
+        <view class="add-hero-cloud hero-cloud-right"></view>
+        <view class="add-hero-star hero-star-one"></view>
+        <view class="add-hero-star hero-star-two"></view>
+        <view class="add-hero-window">
+          <view class="hero-moon-disc">
+            <view class="hero-moon-crater crater-a"></view>
+            <view class="hero-moon-crater crater-b"></view>
+            <view class="hero-moon-shine shine-a"></view>
+            <view class="hero-moon-shine shine-b"></view>
+          </view>
+          <view class="hero-rabbit-body">
+            <view class="hero-rabbit-tail"></view>
+          </view>
+          <view class="hero-rabbit-head">
+            <view class="hero-rabbit-eye eye-left"></view>
+            <view class="hero-rabbit-eye eye-right"></view>
+          </view>
+          <view class="hero-rabbit-ear ear-left"></view>
+          <view class="hero-rabbit-ear ear-right"></view>
+          <view class="hero-window-cloud cloud-a"></view>
+          <view class="hero-window-cloud cloud-b"></view>
+        </view>
+      </block>
       <view class="hero-copy">
-        <text class="eyebrow">Kuma Closet</text>
-        <text class="title-text">给衣柜添一件小可爱</text>
+        <text class="eyebrow">{{selectedSkin == 'princess-castle' ? 'Moon Palace' : 'Kuma Closet'}}</text>
+        <text class="title-text">{{selectedSkin == 'princess-castle' ? '月宫入衣台' : '给衣柜添一件小可爱'}}</text>
+        <text class="title-sub" wx:if="{{selectedSkin == 'princess-castle'}}">把今日新衣收入云纹衣阁</text>
       </view>
       <image class="hero-sticker" src="/images/home/bear-shopping.png" mode="aspectFit"></image>
     </view>
 
     <view class="upload-box kawaii-card" bindtap="chooseImage">
+      <block wx:if="{{selectedSkin == 'princess-castle'}}">
+        <view class="upload-frame-glow"></view>
+        <view class="upload-cloud upload-cloud-left"></view>
+        <view class="upload-cloud upload-cloud-right"></view>
+      </block>
       <image wx:if="{{itemUrl}}" src="{{itemUrl}}" mode="aspectFill" class="preview-img"></image>
       <view wx:else class="upload-placeholder">
         <image class="upload-sticker" src="/images/home/bear-phone.png" mode="aspectFit"></image>
-        <text class="upload-hint">点击选择衣服照片</text>
-        <text class="upload-sub">可选，没传照片会用默认图</text>
+        <view class="upload-palace-symbol" wx:if="{{selectedSkin == 'princess-castle'}}">
+          <view class="upload-jade-ring"></view>
+          <view class="upload-moon-disc">
+            <view class="upload-moon-mark mark-one"></view>
+            <view class="upload-moon-mark mark-two"></view>
+          </view>
+          <view class="upload-rabbit-body"></view>
+          <view class="upload-rabbit-head"></view>
+          <view class="upload-rabbit-ear ear-one"></view>
+          <view class="upload-rabbit-ear ear-two"></view>
+          <view class="upload-silk-cloud cloud-one"></view>
+          <view class="upload-silk-cloud cloud-two"></view>
+        </view>
+        <text class="upload-hint">{{selectedSkin == 'princess-castle' ? '轻点月窗，收入今日新衣' : '点击选择衣服照片'}}</text>
+        <text class="upload-sub">{{selectedSkin == 'princess-castle' ? '可先留空，月宫会暂放默认衣影' : '可选，没传照片会用默认图'}}</text>
       </view>
       <view class="upload-badge">
+        <block wx:if="{{selectedSkin == 'princess-castle'}}">
+          <view class="badge-mooncake">
+            <view class="badge-mooncake-ring"></view>
+            <view class="badge-mooncake-dot dot-a"></view>
+            <view class="badge-mooncake-dot dot-b"></view>
+          </view>
+        </block>
         <text>{{itemUrl ? '重新选择' : '添加照片'}}</text>
       </view>
     </view>
 
     <view class="form-box kawaii-card">
+      <block wx:if="{{selectedSkin == 'princess-castle'}}">
+        <view class="panel-watermark form-watermark"></view>
+        <view class="panel-cloud panel-cloud-a"></view>
+      </block>
       <view class="section-head">
-        <text class="section-title">衣服信息</text>
+        <text class="section-title">{{selectedSkin == 'princess-castle' ? '衣影小札' : '衣服信息'}}</text>
       </view>
 
       <view class="form-item">
@@ -49,12 +110,16 @@
     </view>
 
     <view class="category-box kawaii-card">
+      <block wx:if="{{selectedSkin == 'princess-castle'}}">
+        <view class="panel-watermark category-watermark"></view>
+        <view class="panel-cloud panel-cloud-b"></view>
+      </block>
       <view class="section-head">
         <view>
-          <text class="section-title">选择分类</text>
+          <text class="section-title">{{selectedSkin == 'princess-castle' ? '收进哪一阁' : '选择分类'}}</text>
         </view>
         <view class="add-cat-toggle" bindtap="toggleCategoryInput">
-          <text>{{showCategoryInput ? '收起' : '+ 分类'}}</text>
+          <text>{{showCategoryInput ? '收起' : (selectedSkin == 'princess-castle' ? '+ 月签' : '+ 分类')}}</text>
         </view>
       </view>
 
@@ -67,6 +132,7 @@
           data-category="{{item}}"
         >
           <text class="chip-dot"></text>
+          <view class="chip-cloud" wx:if="{{selectedSkin == 'princess-castle'}}"></view>
           <text>{{item}}</text>
         </view>
       </view>
@@ -80,6 +146,11 @@
           bindinput="onNewCategoryInput"
         />
         <view class="new-category-btn {{isSavingCategory ? 'disabled' : ''}}" bindtap="addCategory">
+          <block wx:if="{{selectedSkin == 'princess-castle'}}">
+            <view class="cat-mooncake">
+              <view class="cat-mooncake-ring"></view>
+            </view>
+          </block>
           <text>{{isSavingCategory ? '添加中' : '添加'}}</text>
         </view>
       </view>
@@ -89,11 +160,18 @@
       </view>
     </view>
 
-    <view class="save-btn kawaii-btn" bindtap="saveItem">
-      <text>保存到衣柜</text>
-    </view>
-
-    <view style="height:80rpx;"></view>
+    <view class="save-spacer"></view>
   </scroll-view>
+
+  <view class="save-btn kawaii-btn" bindtap="saveItem">
+    <block wx:if="{{selectedSkin == 'princess-castle'}}">
+      <view class="save-cloud save-cloud-left"></view>
+      <view class="save-cloud save-cloud-right"></view>
+      <view class="save-seal">
+        <view class="save-seal-ring"></view>
+      </view>
+    </block>
+    <text>保存到衣柜</text>
+  </view>
 </view>
 

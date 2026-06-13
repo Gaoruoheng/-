@@ -1,4 +1,4 @@
-<view class="container">
+<view class="container skin-{{selectedSkin}}">
   <view class="top-nav">
     <view class="kawaii-back" bindtap="goBack"><view class="kawaii-back-icon"><view class="kawaii-back-stroke"></view></view><text class="kawaii-back-label">返回</text></view>
     <text class="nav-title">编辑衣服</text>
